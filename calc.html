@@ -144,6 +144,13 @@
 
         .fonte { display: block; font-size: 0.75rem; color: var(--gray-500); margin-top: 0.3rem; line-height: 1.45; }
 
+        /* Precisa do seletor de tipo junto: .form-group label ja fixa
+         * display:block e pesa mais que uma classe sozinha. */
+        label.campo-extra { display: none; margin-top: 0.6rem; font-size: 0.8rem; color: var(--gray-700); }
+        label.campo-extra.mostrar { display: block; }
+        .campo-extra input { width: 100%; margin-top: 0.3rem; }
+        .campo-extra .fonte { margin-top: 0.25rem; }
+
         .modo-nao-incide { color: var(--gray-400); }
         .linha-inativa td { opacity: 0.45; }
 
@@ -496,17 +503,36 @@ const TRIBUTOS = [
     fonte: () => 'A reforma não extinguiu a CSLL; ela segue fora do IBS e da CBS.' },
 
   { id: 'inss', nome: 'INSS', padrao: 11,
-    modos: ['retido', 'nao-incide'], modoPadrao: 'nao-incide',
+    modos: ['retido-pf', 'retido-pj', 'nao-incide'], modoPadrao: 'nao-incide',
     existeEm: () => true,
-    fonte: () => 'Retenção previdenciária sobre cessão de mão de obra e empreitada.' },
+    fonte: () => 'São dois regimes diferentes. <strong>Prestador pessoa física:</strong> '
+      + 'a empresa é obrigada a descontar a contribuição do contribuinte individual e recolher '
+      + '(Lei 10.666/2003, art. 4º) — 11% limitados ao teto do salário-de-contribuição. '
+      + '<strong>Cessão de mão de obra ou empreitada</strong> entre pessoas jurídicas: 11% sobre o '
+      + 'valor bruto da nota, sem teto (Lei 8.212/91, art. 31).',
+    extra: guardado => `<label class="campo-extra" data-so-para="retido-pf">Teto do salário-de-contribuição (R$)
+        <input type="number" id="teto_inss" value="${guardado ?? TETO_INSS_PADRAO}" step="0.01" min="0">
+        <span class="fonte">Valor de 2025. É reajustado todo ano — confirme o do exercício.</span>
+      </label>` },
 ];
 
 const ROTULO_MODO = {
   'retido':      'Retido — desce do líquido',
+  'retido-pf':   'Retido — prestador pessoa física (até o teto)',
+  'retido-pj':   'Retido — cessão de mão de obra ou empreitada',
   'nao-retido':  'Não retido — o prestador recolhe',
   'por-fora':    'Por fora — soma ao preço',
   'nao-incide':  'Não incide',
 };
+
+/* Todo modo que comeca por "retido" desce do liquido do prestador. */
+const desceDoLiquido = modo => modo.startsWith('retido');
+
+/* Limite maximo do salario-de-contribuicao. Vale so para a retencao
+ * do contribuinte individual (pessoa fisica); a do art. 31 da Lei
+ * 8.212/91 incide sobre o valor bruto da nota, sem teto.
+ * Este numero e reajustado todo ano — confira antes de usar. */
+const TETO_INSS_PADRAO = 8157.41;   // vigente em 2025
 
 const FAIXAS_IR_PADRAO = [
   { de: 0,       ate: 5000,      aliquota: 0,    deducao: 0 },
@@ -521,6 +547,10 @@ const FAIXAS_IR_PADRAO = [
 const $ = id => document.getElementById(id);
 const moeda = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
 const pct = v => `${Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 4 })}%`;
+/* Percentual que a calculadora deduziu, e nao um que alguem digitou.
+ * Duas casas bastam: mais do que isso sugere uma exatidao que a
+ * divisao nao tem, e a aliquota da lei continua visivel ao lado. */
+const pctEfetivo = v => `${Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
 const num = v => { const n = parseFloat(String(v ?? '').replace(',', '.')); return Number.isFinite(n) ? n : null; };
 
 function anoAtivo() {
@@ -564,6 +594,7 @@ function montarTributos() {
     anterior[id] = {
       aliquota: $(`aliq_${id}`)?.value,
       modo: $(`modo_${id}`)?.value,
+      teto: $(`teto_${id}`)?.value,
     };
   });
 
@@ -580,9 +611,26 @@ function montarTributos() {
       <td><strong>${t.nome}</strong></td>
       <td><input type="number" id="aliq_${t.id}" value="${valor}" step="0.01" min="0" max="100"${existe ? '' : ' disabled'}></td>
       <td><select id="modo_${t.id}"${existe ? '' : ' disabled'}>${opcoes}</select></td>
-      <td><span class="fonte">${existe ? t.fonte(a) : `Não existe em ${a.ano}.`}</span></td>
+      <td><span class="fonte">${existe ? t.fonte(a) : `Não existe em ${a.ano}.`}</span>
+        ${existe && t.extra ? t.extra(anterior[t.id]?.teto) : ''}</td>
     </tr>`;
   }).join('');
+
+  document.querySelectorAll('#corpoTributos tr[data-trib]').forEach(tr => {
+    const chave = tr.querySelector('select');
+    if (chave) chave.addEventListener('change', () => sincronizarExtras(tr));
+    sincronizarExtras(tr);
+  });
+}
+
+/* Um campo extra pertence a um modo: aparece quando aquele modo esta
+ * escolhido e some nos outros. O teto do INSS, por exemplo, so faz
+ * sentido na retencao do contribuinte individual. */
+function sincronizarExtras(tr) {
+  const modo = tr.querySelector('select')?.value;
+  tr.querySelectorAll('[data-so-para]').forEach(campo => {
+    campo.classList.toggle('mostrar', campo.dataset.soPara === modo);
+  });
 }
 
 function montarTabelaIR() {
@@ -645,6 +693,7 @@ function lerConfiguracao() {
       aliquota: existe ? (num($(`aliq_${t.id}`)?.value) ?? 0) / 100 : 0,
       fator: t.fator ? t.fator(a) : 1,
       modo: existe ? ($(`modo_${t.id}`)?.value ?? 'nao-incide') : 'nao-incide',
+      teto: num($(`teto_${t.id}`)?.value) ?? 0,
     };
   }
   const d = tipo => {
@@ -684,12 +733,19 @@ function liquidoDe(servico, cfg) {
   for (const t of TRIBUTOS) {
     const c = cfg.trib[t.id];
     if (!c.existe || c.modo === 'nao-incide') continue;
-    const aliqEfetiva = c.aliquota * (c.fator ?? 1);
-    const valor = base * aliqEfetiva;
-    if (c.modo === 'retido') retido += valor;
+    const aliquota = c.aliquota * (c.fator ?? 1);
+    /* O teto limita a base, nao a contribuicao: a lei fixa um limite
+     * maximo para o salario-de-contribuicao, e a aliquota corre sobre
+     * ele. So o regime do contribuinte individual tem teto. */
+    const comTeto = c.modo === 'retido-pf' && c.teto > 0 && base > c.teto;
+    const valor = (comTeto ? c.teto : base) * aliquota;
+    if (desceDoLiquido(c.modo)) retido += valor;
     else if (c.modo === 'por-fora') porFora += valor;
     else naoRetido += valor;
-    linhas.push({ id: t.id, nome: c.nome, modo: c.modo, aliqEfetiva, valor });
+    /* Quando o teto morde, o percentual sobre o servico inteiro deixa
+     * de ser a aliquota da lei — o cartao mostra o que de fato saiu. */
+    linhas.push({ id: t.id, nome: c.nome, modo: c.modo, valor, limitado: comTeto,
+                  aliqEfetiva: base > 0 ? valor / base : aliquota });
   }
 
   const ir = cfg.temIR ? irDe(base, cfg.faixasIR) : 0;
@@ -753,14 +809,19 @@ function calcular() {
   if (r.dInc > 0) html += cartao('Base de cálculo', moeda(r.base), 'depois do desconto incondicional');
 
   for (const l of r.linhas) {
-    const nota = `${pct(l.aliqEfetiva * 100)} · ${ROTULO_MODO[l.modo].toLowerCase()}`;
+    /* No teto, o percentual mostrado ja e o efetivo sobre o servico
+     * inteiro, e nao a aliquota da lei — daí o aviso, senao o numero
+     * pareceria errado a quem conhece os 11%. */
+    const nota = l.limitado
+      ? `${pctEfetivo(l.aliqEfetiva * 100)} do serviço · parou no teto de ${moeda(cfg.trib[l.id].teto)}`
+      : `${pct(l.aliqEfetiva * 100)} · ${ROTULO_MODO[l.modo].toLowerCase()}`;
     html += cartao(l.nome, moeda(l.valor), l.id === 'ir' ? notaDoIR(r, cfg) : nota);
   }
 
   if (r.dCond > 0) html += cartao('Desconto condicional', `− ${moeda(r.dCond)}`, 'não reduz a base');
 
   html += cartao('Total retido', moeda(r.retido),
-    r.base > 0 ? `${pct((r.retido / r.base) * 100)} da base` : '');
+    r.base > 0 ? `${pctEfetivo((r.retido / r.base) * 100)} da base` : '');
   if (r.porFora > 0) {
     html += cartao('Somado por fora', `+ ${moeda(r.porFora)}`, 'quem paga é o tomador');
     html += cartao('Total pago pelo tomador', moeda(r.totalTomador), 'serviço menos descontos, mais IBS e CBS');
@@ -808,8 +869,8 @@ function notaDoIR(r, cfg) {
   const f = faixaDe(r.base, cfg.faixasIR);
   const efetiva = (r.ir / r.base) * 100;
   return f
-    ? `faixa de ${pct(f.aliquota * 100)} · efetiva ${pct(efetiva)} da base`
-    : `efetiva ${pct(efetiva)} da base`;
+    ? `faixa de ${pct(f.aliquota * 100)} · efetiva ${pctEfetivo(efetiva)} da base`
+    : `efetiva ${pctEfetivo(efetiva)} da base`;
 }
 
 /* --- eventos -------------------------------------------------------- */
