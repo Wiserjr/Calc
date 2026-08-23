@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora NFSe - IR configurável (isenção até R$ 5.000)</title>
+    <title>Calculadora Reversa NFSe — transição ISS / IBS / CBS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* (mesmo estilo anterior, mantido por brevidade) */
         :root {
             --primary: #3b82f6;
             --primary-light: #93c5fd;
@@ -32,448 +31,140 @@
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--gray-100);
             color: var(--gray-800);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        .app-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
+        .app-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
 
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header h1 { font-size: 2rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.5rem; }
+        .header p { color: var(--gray-600); font-size: 1rem; }
 
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
+        .calculator { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 1024px) { .calculator { grid-template-columns: 1fr 1fr; } }
 
-        .header p {
-            color: var(--gray-600);
-            font-size: 1rem;
-        }
-
-        .calculator {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 1024px) {
-            .calculator {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .card-header {
-            background: var(--gray-50);
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
+        .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+        .card-header { background: var(--gray-50); padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-200); }
         .card-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.25rem; font-weight: 600; color: var(--gray-800);
+            display: flex; align-items: center; gap: 0.5rem;
         }
+        .card-header h2 svg { width: 1.25rem; height: 1.25rem; color: var(--primary); }
+        .card-body { padding: 1.5rem; }
 
-        .card-header h2 svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: var(--primary);
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
-
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group:last-child { margin-bottom: 0; }
         .form-group label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
+            display: block; font-size: 0.875rem; font-weight: 500;
+            color: var(--gray-700); margin-bottom: 0.5rem;
         }
 
         .form-control {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            line-height: 1.5;
-            color: var(--gray-900);
-            background-color: white;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
+            width: 100%; padding: 0.75rem 1rem; font-size: 1rem; line-height: 1.5;
+            color: var(--gray-900); background-color: white;
+            border: 1px solid var(--gray-300); border-radius: var(--radius);
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-
         .form-control:focus {
-            border-color: var(--primary-light);
-            outline: 0;
+            border-color: var(--primary-light); outline: 0;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
         }
-
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            width: 1rem;
-            height: 1rem;
-            accent-color: var(--primary);
-        }
-
-        .checkbox-item label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .radio-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .radio-item input[type="radio"] {
-            width: 1rem;
-            height: 1rem;
-            accent-color: var(--primary);
-        }
-
-        .radio-item label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .input-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 0.75rem;
-        }
-
-        .input-group .form-control {
-            flex: 1;
-        }
+        select.form-control { cursor: pointer; }
 
         .btn {
-            display: inline-block;
-            font-weight: 500;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            user-select: none;
-            border: 1px solid transparent;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            line-height: 1.5;
-            border-radius: var(--radius);
-            transition: all 0.15s ease-in-out;
-            cursor: pointer;
+            display: inline-block; font-weight: 500; text-align: center; white-space: nowrap;
+            vertical-align: middle; user-select: none; border: 1px solid transparent;
+            padding: 0.75rem 1.5rem; font-size: 1rem; line-height: 1.5;
+            border-radius: var(--radius); transition: all 0.15s ease-in-out; cursor: pointer;
         }
+        .btn-primary { color: white; background-color: var(--primary); border-color: var(--primary); }
+        .btn-primary:hover { background-color: var(--primary-dark); border-color: var(--primary-dark); }
+        .btn-block { display: block; width: 100%; }
 
-        .btn-primary {
-            color: white;
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        .collapsible {
-            margin-top: 1rem;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-
-        .collapsible-header {
-            padding: 1rem;
-            background-color: var(--gray-50);
-            border-bottom: 1px solid var(--gray-200);
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .collapsible-body {
-            padding: 1rem;
-            display: none;
-        }
-
-        .collapsible.active .collapsible-body {
-            display: block;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th,
-        .table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
+        .table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        .table th, .table td { padding: 0.55rem 0.5rem; border-bottom: 1px solid var(--gray-200); }
         .table th {
-            text-align: left;
-            font-weight: 500;
-            color: var(--gray-700);
-            background-color: var(--gray-50);
+            text-align: left; font-weight: 500; color: var(--gray-700);
+            background-color: var(--gray-50); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 0.04em;
         }
-
-        .table td input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
+        .table td input, .table td select {
+            width: 100%; padding: 0.4rem 0.5rem; font: inherit; font-size: 0.875rem;
+            border: 1px solid var(--gray-300); border-radius: 6px; background: white;
         }
+        .table td input:focus, .table td select:focus {
+            outline: 2px solid var(--primary-light); outline-offset: 1px; border-color: var(--primary-light);
+        }
+        .table-responsive { overflow-x: auto; }
 
         .info-box {
-            background-color: var(--gray-50);
-            border-left: 4px solid var(--info);
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
+            background-color: var(--gray-50); border-left: 4px solid var(--info);
+            padding: 0.9rem 1rem; margin-top: 1rem; border-radius: 0 var(--radius) var(--radius) 0;
+            font-size: 0.875rem; line-height: 1.6;
         }
+        .info-box strong { color: var(--gray-800); }
+        .info-box.aviso { border-left-color: var(--warning); background-color: #fffbeb; }
 
-        .info-box strong {
-            color: var(--gray-800);
-        }
-
-        .results {
-            margin-top: 2rem;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; }
         .result-card {
-            background-color: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.25rem;
-            text-align: center;
+            background-color: white; border-radius: var(--radius);
+            box-shadow: var(--shadow); padding: 1.1rem; text-align: center;
         }
-
+        .result-card.destaque { box-shadow: 0 0 0 2px var(--primary), var(--shadow); }
         .result-card h4 {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--gray-600);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.75rem; font-weight: 500; color: var(--gray-600);
+            margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;
         }
-
-        .result-card .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-        }
-
-        .result-card .percentage {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
+        .result-card .value { font-size: 1.4rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.25rem; }
+        .result-card .percentage { font-size: 0.8rem; color: var(--gray-500); line-height: 1.4; }
 
         .dynamic-field {
-            display: none;
-            margin-top: 1.5rem;
-            padding: 1.25rem;
-            background-color: var(--gray-50);
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
+            display: none; margin-top: 1.25rem; padding: 1.1rem;
+            background-color: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200);
         }
+        .dynamic-field.show { display: block; }
+        .dynamic-field h3 { font-size: 1rem; font-weight: 600; color: var(--gray-800); margin-bottom: 0.9rem; }
 
-        .dynamic-field.show {
-            display: block;
+        .ano-painel {
+            background: #eff6ff; border: 1px solid var(--primary-light);
+            border-radius: var(--radius); padding: 1rem; margin-top: 0.75rem; font-size: 0.875rem;
         }
+        .ano-painel b { color: var(--primary-dark); }
+        .ano-painel ul { margin: 0.5rem 0 0 1.1rem; }
+        .ano-painel li { margin-bottom: 0.2rem; }
 
-        .dynamic-field h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 1rem;
-        }
+        .fonte { display: block; font-size: 0.75rem; color: var(--gray-500); margin-top: 0.3rem; line-height: 1.45; }
 
-        .tab-container {
-            margin-bottom: 1.5rem;
-        }
+        .modo-nao-incide { color: var(--gray-400); }
+        .linha-inativa td { opacity: 0.45; }
 
-        .tab-header {
-            display: flex;
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 1.5rem;
-        }
+        .radio-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .radio-item { display: flex; align-items: center; gap: 0.5rem; }
+        .radio-item input[type="radio"] { width: 1rem; height: 1rem; accent-color: var(--primary); }
+        .radio-item label { margin-bottom: 0; cursor: pointer; }
 
-        .tab-btn {
-            padding: 0.75rem 1.25rem;
-            font-weight: 500;
-            color: var(--gray-600);
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-        }
+        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; }
+        .checkbox-item input[type="checkbox"] { width: 1rem; height: 1rem; accent-color: var(--primary); }
+        .checkbox-item label { margin-bottom: 0; cursor: pointer; }
 
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .switch-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--gray-300);
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--primary);
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px var(--primary);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
-
-        .switch-label {
-            font-size: 0.875rem;
-            color: var(--gray-700);
+        .rodape {
+            max-width: 1200px; margin: 2rem auto 0; padding: 0 1rem 2rem;
+            font-size: 0.8rem; color: var(--gray-500); line-height: 1.6;
         }
 
         @media (max-width: 768px) {
-            .checkbox-group {
-                grid-template-columns: 1fr;
-            }
-
-            .radio-group {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .input-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .input-group .form-control {
-                width: 100%;
-            }
+            .checkbox-group { grid-template-columns: 1fr; }
+            .radio-group { flex-direction: column; gap: 0.75rem; }
         }
     </style>
 </head>
@@ -481,7 +172,7 @@
     <div class="app-container">
         <div class="header">
             <h1>Calculadora Reversa NFSe</h1>
-            <p>Calcule impostos e descontos a partir do valor líquido (IR totalmente configurável)</p>
+            <p>Do valor líquido ao valor do serviço, ano a ano da transição para o IBS e a CBS</p>
         </div>
 
         <div class="calculator">
@@ -497,171 +188,71 @@
                     </h2>
                 </div>
                 <div class="card-body">
-                    <!-- Seletor de regime tributário -->
-                    <div class="tab-container">
-                        <div class="tab-header">
-                            <button class="tab-btn active" id="btnRegimeAtual" onclick="mudarRegime('atual')">Regime Atual (PIS/COFINS/CSLL/ISS)</button>
-                            <button class="tab-btn" id="btnRegimeNovo" onclick="mudarRegime('novo')">Novo Regime (IBS/CBS)</button>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="anoCompetencia">Ano da competência</label>
+                        <select id="anoCompetencia" class="form-control"></select>
+                        <div class="ano-painel" id="anoPainel"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="valorLiquido">Valor Líquido Final (R$)</label>
+                        <label for="valorLiquido">Valor líquido a receber (R$)</label>
                         <input type="number" id="valorLiquido" class="form-control" step="0.01" placeholder="0,00">
+                        <span class="fonte">É o que o prestador quer receber depois das retenções e dos descontos. A calculadora procura o valor do serviço que produz exatamente esse líquido.</span>
                     </div>
 
-                    <!-- Campos que mudam conforme o regime -->
-                    <div id="regimeAtual">
-                        <div class="form-group">
-                            <label for="aliquotaISSQN">Alíquota ISSQN (%)</label>
-                            <input type="number" id="aliquotaISSQN" class="form-control" value="5" step="0.01" min="0" max="100">
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" id="issRetido" checked>
-                                    <span class="slider"></span>
-                                </label>
-                                <span class="switch-label">ISS Retido</span>
-                            </div>
+                    <div class="form-group">
+                        <label>Tributos sobre o serviço</label>
+                        <div class="table-responsive">
+                            <table class="table" id="tabelaTributos">
+                                <thead>
+                                    <tr>
+                                        <th style="width:26%">Tributo</th>
+                                        <th style="width:20%">Alíquota (%)</th>
+                                        <th style="width:28%">Como incide</th>
+                                        <th style="width:26%">Observação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoTributos"></tbody>
+                            </table>
                         </div>
-                    </div>
-
-                    <div id="regimeNovo" style="display: none;">
-                        <div class="form-group">
-                            <label for="aliquotaIBS">Alíquota IBS (%)</label>
-                            <input type="number" id="aliquotaIBS" class="form-control" value="8" step="0.01" min="0" max="100">
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" id="ibsRetido">
-                                    <span class="slider"></span>
-                                </label>
-                                <span class="switch-label">IBS Retido</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="aliquotaCBS">Alíquota CBS (%)</label>
-                            <input type="number" id="aliquotaCBS" class="form-control" value="9" step="0.01" min="0" max="100">
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" id="cbsRetido">
-                                    <span class="slider"></span>
-                                </label>
-                                <span class="switch-label">CBS Retido</span>
-                            </div>
+                        <div class="info-box aviso">
+                            <strong>Confira as alíquotas antes de lançar.</strong> As de referência do IBS e da CBS
+                            dependem de ato do Senado Federal e mudam; as sugeridas aqui são estimativas de
+                            trabalho, não valores oficiais. A alíquota do ISS é a do seu Município, e a
+                            calculadora aplica sozinha a redução do ano.
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Impostos e Descontos Aplicáveis</label>
+                        <label>Outras retenções e descontos</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="temINSS">
-                                <label for="temINSS">INSS</label>
-                            </div>
-                            <div class="checkbox-item">
                                 <input type="checkbox" id="temIR">
-                                <label for="temIR">IR</label>
-                            </div>
-                            <!-- Impostos do regime atual -->
-                            <div class="checkbox-item regime-atual-item">
-                                <input type="checkbox" id="temCSLL">
-                                <label for="temCSLL">CSLL</label>
-                            </div>
-                            <div class="checkbox-item regime-atual-item">
-                                <input type="checkbox" id="temPIS">
-                                <label for="temPIS">PIS</label>
-                            </div>
-                            <div class="checkbox-item regime-atual-item">
-                                <input type="checkbox" id="temCOFINS">
-                                <label for="temCOFINS">COFINS</label>
-                            </div>
-                            <!-- Novos impostos do regime novo -->
-                            <div class="checkbox-item regime-novo-item" style="display: none;">
-                                <input type="checkbox" id="temIBS">
-                                <label for="temIBS">IBS</label>
-                            </div>
-                            <div class="checkbox-item regime-novo-item" style="display: none;">
-                                <input type="checkbox" id="temCBS">
-                                <label for="temCBS">CBS</label>
+                                <label for="temIR">Imposto de Renda</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="temDescontoIncondicional">
-                                <label for="temDescontoIncondicional">Desc. Incondicional</label>
+                                <label for="temDescontoIncondicional">Desconto incondicional</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="temDescontoCondicional">
-                                <label for="temDescontoCondicional">Desc. Condicional</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="temOutroDesconto">
-                                <label for="temOutroDesconto">Outro Desconto</label>
+                                <label for="temDescontoCondicional">Desconto condicional</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Campos dinâmicos existentes (INSS, CSLL, PIS, COFINS, descontos) -->
-                    <div id="fieldINSS" class="dynamic-field">
-                        <h3>Configuração INSS</h3>
-                        <div class="form-group">
-                            <label for="aliquotaINSS">Alíquota INSS (%)</label>
-                            <input type="number" id="aliquotaINSS" class="form-control" value="11" step="0.01" min="0" max="100">
-                        </div>
-                    </div>
-
-                    <div id="fieldCSLL" class="dynamic-field regime-atual-item">
-                        <h3>Configuração CSLL</h3>
-                        <div class="form-group">
-                            <label for="aliquotaCSLL">Alíquota CSLL (%)</label>
-                            <input type="number" id="aliquotaCSLL" class="form-control" value="1" step="0.01" min="0" max="100">
-                        </div>
-                    </div>
-
-                    <div id="fieldPIS" class="dynamic-field regime-atual-item">
-                        <h3>Configuração PIS</h3>
-                        <div class="form-group">
-                            <label for="aliquotaPIS">Alíquota PIS (%)</label>
-                            <input type="number" id="aliquotaPIS" class="form-control" value="0.65" step="0.01" min="0" max="100">
-                        </div>
-                    </div>
-
-                    <div id="fieldCOFINS" class="dynamic-field regime-atual-item">
-                        <h3>Configuração COFINS</h3>
-                        <div class="form-group">
-                            <label for="aliquotaCOFINS">Alíquota COFINS (%)</label>
-                            <input type="number" id="aliquotaCOFINS" class="form-control" value="3" step="0.01" min="0" max="100">
-                        </div>
-                    </div>
-
-                    <!-- Campos dinâmicos para IBS e CBS -->
-                    <div id="fieldIBS" class="dynamic-field regime-novo-item">
-                        <h3>Configuração IBS</h3>
-                        <div class="form-group">
-                            <label for="aliquotaIBS">Alíquota IBS (%)</label>
-                            <input type="number" id="aliquotaIBS" class="form-control" value="8" step="0.01" min="0" max="100">
-                        </div>
-                    </div>
-
-                    <div id="fieldCBS" class="dynamic-field regime-novo-item">
-                        <h3>Configuração CBS</h3>
-                        <div class="form-group">
-                            <label for="aliquotaCBS">Alíquota CBS (%)</label>
-                            <input type="number" id="aliquotaCBS" class="form-control" value="9" step="0.01" min="0" max="100">
-                        </div>
-                    </div>
-
-                    <!-- Descontos -->
                     <div id="descontoIncondicionalConfig" class="dynamic-field">
-                        <h3>Desconto Incondicional</h3>
+                        <h3>Desconto incondicional</h3>
                         <div class="form-group">
-                            <label>Tipo de Desconto</label>
                             <div class="radio-group">
                                 <div class="radio-item">
                                     <input type="radio" id="incondicionalTipoAliquota" name="incondicionalTipo" value="aliquota" checked>
-                                    <label for="incondicionalTipoAliquota">Por Alíquota</label>
+                                    <label for="incondicionalTipoAliquota">Por alíquota</label>
                                 </div>
                                 <div class="radio-item">
                                     <input type="radio" id="incondicionalTipoValor" name="incondicionalTipo" value="valor">
-                                    <label for="incondicionalTipoValor">Por Valor</label>
+                                    <label for="incondicionalTipoValor">Por valor</label>
                                 </div>
                             </div>
                         </div>
@@ -674,22 +265,23 @@
                             <input type="number" id="incondicionalValor" class="form-control" step="0.01" min="0" placeholder="0,00">
                         </div>
                         <div class="info-box">
-                            <strong>Incondicional:</strong> Desconto aplicado diretamente na nota, reduz a base de cálculo dos impostos.
+                            <strong>Reduz a base de cálculo.</strong> O desconto incondicional consta da própria
+                            nota e não depende de nenhuma condição, então os tributos incidem sobre o valor já
+                            abatido.
                         </div>
                     </div>
 
                     <div id="descontoCondicionalConfig" class="dynamic-field">
-                        <h3>Desconto Condicional</h3>
+                        <h3>Desconto condicional</h3>
                         <div class="form-group">
-                            <label>Tipo de Desconto</label>
                             <div class="radio-group">
                                 <div class="radio-item">
                                     <input type="radio" id="condicionalTipoAliquota" name="condicionalTipo" value="aliquota" checked>
-                                    <label for="condicionalTipoAliquota">Por Alíquota</label>
+                                    <label for="condicionalTipoAliquota">Por alíquota</label>
                                 </div>
                                 <div class="radio-item">
                                     <input type="radio" id="condicionalTipoValor" name="condicionalTipo" value="valor">
-                                    <label for="condicionalTipoValor">Por Valor</label>
+                                    <label for="condicionalTipoValor">Por valor</label>
                                 </div>
                             </div>
                         </div>
@@ -702,88 +294,57 @@
                             <input type="number" id="condicionalValor" class="form-control" step="0.01" min="0" placeholder="0,00">
                         </div>
                         <div class="info-box">
-                            <strong>Condicional:</strong> Desconto sujeito a condição (ex: pagamento antecipado). NÃO reduz a base de cálculo dos impostos.
+                            <strong>Não reduz a base de cálculo.</strong> Depende de uma condição — pagamento
+                            antecipado, por exemplo. Os tributos incidem sobre o valor cheio, e o desconto só
+                            diminui o que o prestador recebe.
                         </div>
                     </div>
 
-                    <div id="outroDescontoConfig" class="dynamic-field">
-                        <h3>Outro Desconto</h3>
-                        <div class="form-group">
-                            <label>Tipo de Desconto</label>
-                            <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="outroTipoAliquota" name="outroTipo" value="aliquota" checked>
-                                    <label for="outroTipoAliquota">Por Alíquota</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="outroTipoValor" name="outroTipo" value="valor">
-                                    <label for="outroTipoValor">Por Valor</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="outroAliquota">Alíquota (%)</label>
-                            <input type="number" id="outroAliquota" class="form-control" step="0.01" min="0" max="100" placeholder="0,00">
-                        </div>
-                        <div class="form-group">
-                            <label for="outroValor">Valor (R$)</label>
-                            <input type="number" id="outroValor" class="form-control" step="0.01" min="0" placeholder="0,00">
-                        </div>
-                    </div>
-
-                    <!-- TABELA DO IR TOTALMENTE CONFIGURÁVEL -->
                     <div id="irTable" class="dynamic-field">
-                        <h3>Tabela do Imposto de Renda (configurável)</h3>
+                        <h3>Tabela do Imposto de Renda</h3>
                         <div class="table-responsive">
                             <table class="table" id="tabelaIR">
                                 <thead>
                                     <tr>
-                                        <th>Limite Inferior (R$)</th>
-                                        <th>Limite Superior (R$)</th>
+                                        <th>De (R$)</th>
+                                        <th>Até (R$)</th>
                                         <th>Alíquota (%)</th>
                                         <th>Dedução (R$)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="number" id="limiteInf0" class="form-control" value="0" step="0.01" min="0"></td>
-                                        <td><input type="number" id="limiteSup0" class="form-control" value="5000" step="0.01" min="0"></td>
-                                        <td><input type="number" id="aliquota0" class="form-control" value="0" step="0.01" min="0" max="100"></td>
-                                        <td><input type="number" id="deducao0" class="form-control" value="0" step="0.01" min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="number" id="limiteInf1" class="form-control" value="5000.01" step="0.01" min="0"></td>
-                                        <td><input type="number" id="limiteSup1" class="form-control" value="6000" step="0.01" min="0"></td>
-                                        <td><input type="number" id="aliquota1" class="form-control" value="7.5" step="0.01" min="0" max="100"></td>
-                                        <td><input type="number" id="deducao1" class="form-control" value="169.44" step="0.01" min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="number" id="limiteInf2" class="form-control" value="6000.01" step="0.01" min="0"></td>
-                                        <td><input type="number" id="limiteSup2" class="form-control" value="7500" step="0.01" min="0"></td>
-                                        <td><input type="number" id="aliquota2" class="form-control" value="15" step="0.01" min="0" max="100"></td>
-                                        <td><input type="number" id="deducao2" class="form-control" value="381.44" step="0.01" min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="number" id="limiteInf3" class="form-control" value="7500.01" step="0.01" min="0"></td>
-                                        <td><input type="number" id="limiteSup3" class="form-control" value="9000" step="0.01" min="0"></td>
-                                        <td><input type="number" id="aliquota3" class="form-control" value="22.5" step="0.01" min="0" max="100"></td>
-                                        <td><input type="number" id="deducao3" class="form-control" value="662.77" step="0.01" min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="number" id="limiteInf4" class="form-control" value="9000.01" step="0.01" min="0"></td>
-                                        <td><input type="number" id="limiteSup4" class="form-control" value="999999999" step="0.01" min="0"></td>
-                                        <td><input type="number" id="aliquota4" class="form-control" value="27.5" step="0.01" min="0" max="100"></td>
-                                        <td><input type="number" id="deducao4" class="form-control" value="896.00" step="0.01" min="0"></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="corpoIR"></tbody>
                             </table>
                         </div>
-                        <div class="info-box" style="margin-top: 1rem;">
-                            <strong>Atenção:</strong> Os limites são totalmente editáveis. A última faixa deve ter um limite superior muito alto (ex.: 999999999) para cobrir valores acima.
+                        <div class="info-box">
+                            <strong>Os limites são editáveis.</strong> A última faixa deve ter um teto muito alto
+                            para cobrir qualquer valor. A calculadora avisa se as faixas deixarem buraco ou se
+                            sobrepuserem.
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-block" onclick="calcular()">Calcular Impostos</button>
+                    <div class="form-group" style="margin-top:1.5rem">
+                        <button class="btn btn-primary btn-block" id="btnCalcular">Calcular</button>
+                    </div>
+
+                    <div class="table-responsive" style="margin-top:1.5rem">
+                        <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.6rem">Calendário da transição</h3>
+                        <table class="table" id="tabelaCalendario">
+                            <thead>
+                                <tr>
+                                    <th>Ano</th><th>PIS/COFINS</th><th>CBS</th><th>ISS</th><th>IBS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoCalendario"></tbody>
+                        </table>
+                        <div class="info-box">
+                            <strong>De onde vêm estas frações.</strong> A redução do ISS de 2029 a 2032 está no
+                            art. 128 do ADCT, na redação da Emenda Constitucional nº 132/2023: nove décimos em
+                            2029, oito em 2030, sete em 2031 e seis em 2032. As alíquotas de teste de 2026 — CBS
+                            de 0,9% e IBS de 0,1% — estão no art. 125, e a extinção do PIS e da COFINS a partir de
+                            2027, no art. 126. O ISS se extingue em 2033.
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -795,563 +356,501 @@
                             <line x1="18" y1="20" x2="18" y2="4"></line>
                             <line x1="6" y1="20" x2="6" y2="16"></line>
                         </svg>
-                        Resultados
+                        Resultado
                     </h2>
                 </div>
                 <div class="card-body">
-                    <div id="results" style="display: none;">
-                        <div class="results-grid" id="resultGrid">
-                            <!-- Resultados serão inseridos dinamicamente -->
-                        </div>
+                    <div id="results" style="display:none">
+                        <div class="results-grid" id="resultGrid"></div>
+                        <div id="memoria"></div>
                     </div>
-                    <div id="noResults" style="text-align: center; padding: 3rem 0;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto; display: block; color: var(--gray-400); margin-bottom: 1rem;">
+                    <div id="noResults" style="text-align:center;padding:3rem 0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1rem;display:block;color:var(--gray-400)">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="8" x2="12" y2="12"></line>
                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
-                        <p style="color: var(--gray-500);">Preencha os dados e clique em "Calcular Impostos" para ver os resultados</p>
+                        <p style="color:var(--gray-500)">Informe o valor líquido e clique em Calcular.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Variável global para controlar o regime ativo
-        let regimeAtivo = 'atual'; // 'atual' ou 'novo'
-
-        function formatarMoeda(valor) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(valor);
-        }
-
-        // Função calcularIR lê dinamicamente os limites e alíquotas da tabela
-        function calcularIR(valorBruto) {
-            // Obtém todas as linhas da tabela (ignorando o cabeçalho)
-            const linhas = document.querySelectorAll('#tabelaIR tbody tr');
-            let imposto = 0;
-
-            for (let i = 0; i < linhas.length; i++) {
-                const limiteInf = parseFloat(document.getElementById(`limiteInf${i}`).value) || 0;
-                const limiteSup = parseFloat(document.getElementById(`limiteSup${i}`).value) || Infinity;
-                const aliquota = parseFloat(document.getElementById(`aliquota${i}`).value) / 100 || 0;
-                const deducao = parseFloat(document.getElementById(`deducao${i}`).value) || 0;
-
-                if (valorBruto > limiteInf && valorBruto <= limiteSup) {
-                    imposto = (valorBruto * aliquota) - deducao;
-                    break;
-                }
-            }
-            return Math.max(0, imposto); // Garantir que não fique negativo
-        }
-
-        function toggleField(fieldId, show) {
-            const field = document.getElementById(fieldId);
-            if (field) {
-                field.classList.toggle('show', show);
-            }
-        }
-
-        function mudarRegime(regime) {
-            regimeAtivo = regime;
-
-            // Atualizar abas
-            document.getElementById('btnRegimeAtual').classList.toggle('active', regime === 'atual');
-            document.getElementById('btnRegimeNovo').classList.toggle('active', regime === 'novo');
-
-            // Mostrar/esconder campos de alíquota principais
-            document.getElementById('regimeAtual').style.display = regime === 'atual' ? 'block' : 'none';
-            document.getElementById('regimeNovo').style.display = regime === 'novo' ? 'block' : 'none';
-
-            // Mostrar/esconder checkboxes de impostos específicos
-            const itensAtual = document.querySelectorAll('.regime-atual-item');
-            const itensNovo = document.querySelectorAll('.regime-novo-item');
-
-            itensAtual.forEach(item => {
-                item.style.display = regime === 'atual' ? 'flex' : 'none';
-                if (item.classList.contains('dynamic-field')) {
-                    item.style.display = regime === 'atual' ? 'block' : 'none';
-                }
-            });
-
-            itensNovo.forEach(item => {
-                item.style.display = regime === 'novo' ? 'flex' : 'none';
-                if (item.classList.contains('dynamic-field')) {
-                    item.style.display = regime === 'novo' ? 'block' : 'none';
-                }
-            });
-
-            // Se estiver no novo regime, desmarcar checkboxes do atual que possam estar marcados
-            if (regime === 'novo') {
-                document.getElementById('temCSLL').checked = false;
-                document.getElementById('temPIS').checked = false;
-                document.getElementById('temCOFINS').checked = false;
-                toggleField('fieldCSLL', false);
-                toggleField('fieldPIS', false);
-                toggleField('fieldCOFINS', false);
-            } else {
-                document.getElementById('temIBS').checked = false;
-                document.getElementById('temCBS').checked = false;
-                toggleField('fieldIBS', false);
-                toggleField('fieldCBS', false);
-            }
-        }
-
-        function setupEventListeners() {
-            // INSS
-            document.getElementById('temINSS').addEventListener('change', function() {
-                toggleField('fieldINSS', this.checked);
-            });
-
-            // IR
-            document.getElementById('temIR').addEventListener('change', function() {
-                toggleField('irTable', this.checked);
-            });
-
-            // CSLL (regime atual)
-            document.getElementById('temCSLL').addEventListener('change', function() {
-                if (regimeAtivo === 'atual') toggleField('fieldCSLL', this.checked);
-            });
-
-            // PIS (regime atual)
-            document.getElementById('temPIS').addEventListener('change', function() {
-                if (regimeAtivo === 'atual') toggleField('fieldPIS', this.checked);
-            });
-
-            // COFINS (regime atual)
-            document.getElementById('temCOFINS').addEventListener('change', function() {
-                if (regimeAtivo === 'atual') toggleField('fieldCOFINS', this.checked);
-            });
-
-            // IBS (novo regime)
-            document.getElementById('temIBS').addEventListener('change', function() {
-                if (regimeAtivo === 'novo') toggleField('fieldIBS', this.checked);
-            });
-
-            // CBS (novo regime)
-            document.getElementById('temCBS').addEventListener('change', function() {
-                if (regimeAtivo === 'novo') toggleField('fieldCBS', this.checked);
-            });
-
-            // Desconto Incondicional
-            document.getElementById('temDescontoIncondicional').addEventListener('change', function() {
-                toggleField('descontoIncondicionalConfig', this.checked);
-            });
-
-            // Desconto Condicional
-            document.getElementById('temDescontoCondicional').addEventListener('change', function() {
-                toggleField('descontoCondicionalConfig', this.checked);
-            });
-
-            // Outro Desconto
-            document.getElementById('temOutroDesconto').addEventListener('change', function() {
-                toggleField('outroDescontoConfig', this.checked);
-            });
-
-            // Tipo de desconto incondicional
-            document.getElementById('incondicionalTipoAliquota').addEventListener('change', function() {
-                document.getElementById('incondicionalAliquota').disabled = !this.checked;
-                document.getElementById('incondicionalValor').disabled = this.checked;
-            });
-
-            document.getElementById('incondicionalTipoValor').addEventListener('change', function() {
-                document.getElementById('incondicionalAliquota').disabled = this.checked;
-                document.getElementById('incondicionalValor').disabled = !this.checked;
-            });
-
-            // Tipo de desconto condicional
-            document.getElementById('condicionalTipoAliquota').addEventListener('change', function() {
-                document.getElementById('condicionalAliquota').disabled = !this.checked;
-                document.getElementById('condicionalValor').disabled = this.checked;
-            });
-
-            document.getElementById('condicionalTipoValor').addEventListener('change', function() {
-                document.getElementById('condicionalAliquota').disabled = this.checked;
-                document.getElementById('condicionalValor').disabled = !this.checked;
-            });
-
-            // Tipo de outro desconto
-            document.getElementById('outroTipoAliquota').addEventListener('change', function() {
-                document.getElementById('outroAliquota').disabled = !this.checked;
-                document.getElementById('outroValor').disabled = this.checked;
-            });
-
-            document.getElementById('outroTipoValor').addEventListener('change', function() {
-                document.getElementById('outroAliquota').disabled = this.checked;
-                document.getElementById('outroValor').disabled = !this.checked;
-            });
-
-            // Enter no campo de valor líquido
-            document.getElementById('valorLiquido').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    calcular();
-                }
-            });
-
-            // Inicializar estados dos campos
-            document.getElementById('incondicionalValor').disabled = true;
-            document.getElementById('condicionalValor').disabled = true;
-            document.getElementById('outroValor').disabled = true;
-        }
-
-        function calcular() {
-            const valorLiquido = parseFloat(document.getElementById('valorLiquido').value);
-            
-            if (!valorLiquido || valorLiquido <= 0) {
-                alert('Por favor, insira um valor líquido válido.');
-                return;
-            }
-
-            // Obter valores comuns
-            const aliquotaINSS = parseFloat(document.getElementById('aliquotaINSS').value) / 100;
-            const temINSS = document.getElementById('temINSS').checked;
-            const temIR = document.getElementById('temIR').checked;
-
-            // Descontos (comuns aos dois regimes)
-            const temDescontoIncondicional = document.getElementById('temDescontoIncondicional').checked;
-            const incondicionalTipo = document.querySelector('input[name="incondicionalTipo"]:checked')?.value || 'aliquota';
-            const incondicionalAliquota = parseFloat(document.getElementById('incondicionalAliquota').value) / 100 || 0;
-            const incondicionalValor = parseFloat(document.getElementById('incondicionalValor').value) || 0;
-
-            const temDescontoCondicional = document.getElementById('temDescontoCondicional').checked;
-            const condicionalTipo = document.querySelector('input[name="condicionalTipo"]:checked')?.value || 'aliquota';
-            const condicionalAliquota = parseFloat(document.getElementById('condicionalAliquota').value) / 100 || 0;
-            const condicionalValor = parseFloat(document.getElementById('condicionalValor').value) || 0;
-
-            const temOutroDesconto = document.getElementById('temOutroDesconto').checked;
-            const outroTipo = document.querySelector('input[name="outroTipo"]:checked')?.value || 'aliquota';
-            const outroAliquota = parseFloat(document.getElementById('outroAliquota').value) / 100 || 0;
-            const outroValor = parseFloat(document.getElementById('outroValor').value) || 0;
-
-            // Variáveis para os impostos específicos de cada regime
-            let aliquotaISS, issRetido, aliquotaIBS, ibsRetido, aliquotaCBS, cbsRetido;
-            let temCSLL, aliquotaCSLL, temPIS, aliquotaPIS, temCOFINS, aliquotaCOFINS;
-            let temIBS, temCBS;
-
-            if (regimeAtivo === 'atual') {
-                aliquotaISS = parseFloat(document.getElementById('aliquotaISSQN').value) / 100;
-                issRetido = document.getElementById('issRetido').checked;
-                temCSLL = document.getElementById('temCSLL').checked;
-                aliquotaCSLL = parseFloat(document.getElementById('aliquotaCSLL').value) / 100;
-                temPIS = document.getElementById('temPIS').checked;
-                aliquotaPIS = parseFloat(document.getElementById('aliquotaPIS').value) / 100;
-                temCOFINS = document.getElementById('temCOFINS').checked;
-                aliquotaCOFINS = parseFloat(document.getElementById('aliquotaCOFINS').value) / 100;
-            } else {
-                aliquotaIBS = parseFloat(document.getElementById('aliquotaIBS').value) / 100;
-                ibsRetido = document.getElementById('ibsRetido').checked;
-                aliquotaCBS = parseFloat(document.getElementById('aliquotaCBS').value) / 100;
-                cbsRetido = document.getElementById('cbsRetido').checked;
-                temIBS = document.getElementById('temIBS').checked;
-                temCBS = document.getElementById('temCBS').checked;
-            }
-
-            // Cálculo reverso usando aproximação iterativa
-            let valorBruto = valorLiquido;
-            let iteracoes = 0;
-            const maxIteracoes = 1000;
-            const tolerancia = 0.001;
-
-            while (iteracoes < maxIteracoes) {
-                let impostos = 0;
-                let descontosIncondicionais = 0;
-
-                // Desconto incondicional (reduz base)
-                if (temDescontoIncondicional) {
-                    if (incondicionalTipo === 'aliquota') {
-                        descontosIncondicionais += valorBruto * incondicionalAliquota;
-                    } else {
-                        descontosIncondicionais += incondicionalValor;
-                    }
-                }
-
-                // Outro desconto (considerado incondicional)
-                if (temOutroDesconto) {
-                    if (outroTipo === 'aliquota') {
-                        descontosIncondicionais += valorBruto * outroAliquota;
-                    } else {
-                        descontosIncondicionais += outroValor;
-                    }
-                }
-
-                // Base de cálculo após descontos incondicionais (não utilizada diretamente aqui, pois os impostos são sobre o bruto)
-                // Mas se algum imposto fosse sobre a base líquida, você ajustaria.
-
-                if (regimeAtivo === 'atual') {
-                    if (temINSS) impostos += valorBruto * aliquotaINSS;
-                    if (temCSLL) impostos += valorBruto * aliquotaCSLL;
-                    if (temPIS) impostos += valorBruto * aliquotaPIS;
-                    if (temCOFINS) impostos += valorBruto * aliquotaCOFINS;
-                    if (issRetido) impostos += valorBruto * aliquotaISS;
-                    if (temIR) impostos += Math.max(0, calcularIR(valorBruto));
-                } else {
-                    if (temINSS) impostos += valorBruto * aliquotaINSS;
-                    if (temIBS && ibsRetido) impostos += valorBruto * aliquotaIBS;
-                    if (temCBS && cbsRetido) impostos += valorBruto * aliquotaCBS;
-                    if (temIR) impostos += Math.max(0, calcularIR(valorBruto));
-                }
-
-                const valorLiquidoCalculado = valorBruto - impostos - descontosIncondicionais;
-                const diferenca = valorLiquido - valorLiquidoCalculado;
-
-                if (Math.abs(diferenca) < tolerancia) {
-                    break;
-                }
-
-                valorBruto += diferenca * 1.05;
-                iteracoes++;
-            }
-
-            // Cálculo final dos valores
-            let descontosIncondicionaisFinal = 0;
-            if (temDescontoIncondicional) {
-                if (incondicionalTipo === 'aliquota') {
-                    descontosIncondicionaisFinal = valorBruto * incondicionalAliquota;
-                } else {
-                    descontosIncondicionaisFinal = incondicionalValor;
-                }
-            }
-
-            let outroDescontoFinal = 0;
-            if (temOutroDesconto) {
-                if (outroTipo === 'aliquota') {
-                    outroDescontoFinal = valorBruto * outroAliquota;
-                } else {
-                    outroDescontoFinal = outroValor;
-                }
-            }
-
-            let descontoCondicionalFinal = 0;
-            if (temDescontoCondicional) {
-                if (condicionalTipo === 'aliquota') {
-                    descontoCondicionalFinal = valorBruto * condicionalAliquota;
-                } else {
-                    descontoCondicionalFinal = condicionalValor;
-                }
-            }
-
-            let issqnFinal = 0, csllFinal = 0, pisFinal = 0, cofinsFinal = 0, inssFinal = 0, irFinal = 0;
-            let ibsFinal = 0, cbsFinal = 0;
-            let totalImpostos = 0;
-
-            inssFinal = temINSS ? valorBruto * aliquotaINSS : 0;
-            irFinal = temIR ? Math.max(0, calcularIR(valorBruto)) : 0;
-
-            if (regimeAtivo === 'atual') {
-                issqnFinal = aliquotaISS ? valorBruto * aliquotaISS : 0;
-                csllFinal = temCSLL ? valorBruto * aliquotaCSLL : 0;
-                pisFinal = temPIS ? valorBruto * aliquotaPIS : 0;
-                cofinsFinal = temCOFINS ? valorBruto * aliquotaCOFINS : 0;
-                totalImpostos = (issRetido ? issqnFinal : 0) + inssFinal + irFinal + csllFinal + pisFinal + cofinsFinal;
-            } else {
-                ibsFinal = (temIBS && ibsRetido) ? valorBruto * aliquotaIBS : 0;
-                cbsFinal = (temCBS && cbsRetido) ? valorBruto * aliquotaCBS : 0;
-                totalImpostos = inssFinal + irFinal + ibsFinal + cbsFinal;
-            }
-
-            totalImpostos += descontosIncondicionaisFinal + outroDescontoFinal;
-
-            // Gerar resultados dinamicamente
-            const resultGrid = document.getElementById('resultGrid');
-            resultGrid.innerHTML = '';
-
-            // Valor Bruto
-            resultGrid.innerHTML += `
-                <div class="result-card">
-                    <h4>Valor Bruto</h4>
-                    <div class="value">${formatarMoeda(valorBruto)}</div>
-                </div>
-            `;
-
-            if (regimeAtivo === 'atual') {
-                // ISSQN
-                resultGrid.innerHTML += `
-                    <div class="result-card">
-                        <h4>ISSQN</h4>
-                        <div class="value">${formatarMoeda(issqnFinal)}</div>
-                        <div class="percentage">${(aliquotaISS * 100).toFixed(1)}% do valor bruto ${issRetido ? '(retido)' : '(não retido)'}</div>
-                    </div>
-                `;
-
-                // CSLL
-                if (temCSLL) {
-                    resultGrid.innerHTML += `
-                        <div class="result-card">
-                            <h4>CSLL</h4>
-                            <div class="value">${formatarMoeda(csllFinal)}</div>
-                            <div class="percentage">${(aliquotaCSLL * 100).toFixed(1)}% do valor bruto</div>
-                        </div>
-                    `;
-                }
-
-                // PIS
-                if (temPIS) {
-                    resultGrid.innerHTML += `
-                        <div class="result-card">
-                            <h4>PIS</h4>
-                            <div class="value">${formatarMoeda(pisFinal)}</div>
-                            <div class="percentage">${(aliquotaPIS * 100).toFixed(2)}% do valor bruto</div>
-                        </div>
-                    `;
-                }
-
-                // COFINS
-                if (temCOFINS) {
-                    resultGrid.innerHTML += `
-                        <div class="result-card">
-                            <h4>COFINS</h4>
-                            <div class="value">${formatarMoeda(cofinsFinal)}</div>
-                            <div class="percentage">${(aliquotaCOFINS * 100).toFixed(1)}% do valor bruto</div>
-                        </div>
-                    `;
-                }
-            } else {
-                // IBS
-                if (temIBS) {
-                    resultGrid.innerHTML += `
-                        <div class="result-card">
-                            <h4>IBS</h4>
-                            <div class="value">${formatarMoeda(ibsFinal)}</div>
-                            <div class="percentage">${(aliquotaIBS * 100).toFixed(1)}% do valor bruto ${ibsRetido ? '(retido)' : '(não retido)'}</div>
-                        </div>
-                    `;
-                }
-
-                // CBS
-                if (temCBS) {
-                    resultGrid.innerHTML += `
-                        <div class="result-card">
-                            <h4>CBS</h4>
-                            <div class="value">${formatarMoeda(cbsFinal)}</div>
-                            <div class="percentage">${(aliquotaCBS * 100).toFixed(1)}% do valor bruto ${cbsRetido ? '(retido)' : '(não retido)'}</div>
-                        </div>
-                    `;
-                }
-            }
-
-            // INSS
-            if (temINSS) {
-                resultGrid.innerHTML += `
-                    <div class="result-card">
-                        <h4>INSS</h4>
-                        <div class="value">${formatarMoeda(inssFinal)}</div>
-                        <div class="percentage">${(aliquotaINSS * 100).toFixed(1)}% do valor bruto</div>
-                    </div>
-                `;
-            }
-
-            // IR
-            if (temIR) {
-                // Para exibir a faixa, precisamos identificar em qual linha o valorBruto se encaixa
-                let faixaDescricao = 'Isento';
-                let aliquotaEfetiva = 0;
-                if (irFinal > 0) {
-                    aliquotaEfetiva = (irFinal / valorBruto) * 100;
-                    const linhas = document.querySelectorAll('#tabelaIR tbody tr');
-                    for (let i = 0; i < linhas.length; i++) {
-                        const limiteInf = parseFloat(document.getElementById(`limiteInf${i}`).value) || 0;
-                        const limiteSup = parseFloat(document.getElementById(`limiteSup${i}`).value) || Infinity;
-                        if (valorBruto > limiteInf && valorBruto <= limiteSup) {
-                            const aliq = parseFloat(document.getElementById(`aliquota${i}`).value) || 0;
-                            faixaDescricao = `${aliq.toFixed(1)}%`;
-                            break;
-                        }
-                    }
-                }
-
-                resultGrid.innerHTML += `
-                    <div class="result-card">
-                        <h4>IR</h4>
-                        <div class="value">${formatarMoeda(irFinal)}</div>
-                        <div class="percentage">Faixa da alíquota: ${faixaDescricao}</div>
-                        ${irFinal > 0 ? `<div class="percentage">Alíquota efetiva: ${aliquotaEfetiva.toFixed(2)}% do valor bruto</div>` : ''}
-                    </div>
-                `;
-            }
-
-            // Desconto Incondicional
-            if (temDescontoIncondicional) {
-                let percentualTexto = '';
-                if (incondicionalTipo === 'aliquota') {
-                    percentualTexto = `${(incondicionalAliquota * 100).toFixed(2)}% do valor bruto`;
-                } else {
-                    percentualTexto = `Valor fixo: ${formatarMoeda(incondicionalValor)}`;
-                }
-
-                resultGrid.innerHTML += `
-                    <div class="result-card">
-                        <h4>Desconto Incondicional</h4>
-                        <div class="value">${formatarMoeda(descontosIncondicionaisFinal)}</div>
-                        <div class="percentage">${percentualTexto}</div>
-                    </div>
-                `;
-            }
-
-            // Desconto Condicional
-            if (temDescontoCondicional) {
-                let percentualTexto = '';
-                if (condicionalTipo === 'aliquota') {
-                    percentualTexto = `${(condicionalAliquota * 100).toFixed(2)}% do valor bruto (informativo)`;
-                } else {
-                    percentualTexto = `Valor fixo: ${formatarMoeda(condicionalValor)} (informativo)`;
-                }
-
-                resultGrid.innerHTML += `
-                    <div class="result-card">
-                        <h4>Desconto Condicional</h4>
-                        <div class="value">${formatarMoeda(descontoCondicionalFinal)}</div>
-                        <div class="percentage">${percentualTexto}</div>
-                    </div>
-                `;
-            }
-
-            // Outro Desconto
-            if (temOutroDesconto) {
-                let percentualTexto = '';
-                if (outroTipo === 'aliquota') {
-                    percentualTexto = `${(outroAliquota * 100).toFixed(2)}% do valor bruto`;
-                } else {
-                    percentualTexto = `Valor fixo: ${formatarMoeda(outroValor)}`;
-                }
-
-                resultGrid.innerHTML += `
-                    <div class="result-card">
-                        <h4>Outro Desconto</h4>
-                        <div class="value">${formatarMoeda(outroDescontoFinal)}</div>
-                        <div class="percentage">${percentualTexto}</div>
-                    </div>
-                `;
-            }
-
-            // Total de Impostos
-            resultGrid.innerHTML += `
-                <div class="result-card">
-                    <h4>Total de Impostos</h4>
-                    <div class="value">${formatarMoeda(totalImpostos)}</div>
-                    <div class="percentage">${((totalImpostos / valorBruto) * 100).toFixed(1)}% do valor bruto</div>
-                </div>
-            `;
-
-            // Valor Líquido
-            resultGrid.innerHTML += `
-                <div class="result-card">
-                    <h4>Valor Líquido</h4>
-                    <div class="value">${formatarMoeda(valorLiquido)}</div>
-                </div>
-            `;
-
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('noResults').style.display = 'none';
-        }
-
-        // Inicializar eventos quando a página carregar
-        document.addEventListener('DOMContentLoaded', function() {
-            setupEventListeners();
-            mudarRegime('atual'); // Garantir que o estado inicial seja o regime atual
-        });
-    </script>
+    <div class="rodape">
+        Ferramenta de apoio ao cálculo, não parecer tributário. As alíquotas de referência do IBS e da CBS
+        dependem de ato do Senado Federal; as retenções dependem da lei do Município e do contrato. Confirme
+        antes de emitir a nota ou de lançar.
+    </div>
+
+<script>
+'use strict';
+
+/* ------------------------------------------------------------------ *
+ * O CALENDÁRIO DA TRANSIÇÃO
+ *
+ * A reforma não é um interruptor entre dois regimes: é um calendário em
+ * que os tributos convivem em proporções que mudam a cada ano. Deixar
+ * isso como DADO, e não espalhado em ifs pelo código, é o que permite
+ * corrigir uma linha quando a regra mudar sem reescrever a calculadora.
+ *
+ * `issFator` é a fração da alíquota municipal que ainda se cobra.
+ * Cada alíquota de IBS e CBS guarda um de três estados, distintos de
+ * propósito para que nenhum leitor precise consultar o ano:
+ *   false          o tributo não existe neste ano;
+ *   um número      alíquota de teste fixada em lei;
+ *   'referencia'   alíquota de referência, que depende de ato do
+ *                  Senado Federal — quem informa é o usuário.
+ * ------------------------------------------------------------------ */
+const CALENDARIO = [
+  { ano: 2025, pisCofins: true,  csll: true, cbs: false, iss: true, issFator: 1.00, ibs: false,
+    resumo: 'Regime anterior à reforma.',
+    detalhe: ['PIS, COFINS, CSLL e ISS como sempre.', 'IBS e CBS ainda não existem.'] },
+
+  { ano: 2026, pisCofins: true,  csll: true, cbs: 0.9,  iss: true, issFator: 1.00, ibs: 0.1,
+    resumo: 'Ano de teste do IBS e da CBS.',
+    detalhe: ['CBS de 0,9% e IBS de 0,1% (ADCT, art. 125).',
+              'Os dois são compensáveis com PIS e COFINS, e quem cumpre as obrigações acessórias fica dispensado do recolhimento.',
+              'O ISS continua integral.'] },
+
+  { ano: 2027, pisCofins: false, csll: true, cbs: 'referencia', iss: true, issFator: 1.00, ibs: 0.1,
+    resumo: 'PIS e COFINS extintos; CBS na alíquota de referência.',
+    detalhe: ['PIS e COFINS deixam de existir (ADCT, art. 126).',
+              'A CBS passa a ser cobrada pela alíquota de referência.',
+              'O IBS segue em 0,1%, e o ISS, integral.'] },
+
+  { ano: 2028, pisCofins: false, csll: true, cbs: 'referencia', iss: true, issFator: 1.00, ibs: 0.1,
+    resumo: 'Igual a 2027.',
+    detalhe: ['O IBS ainda é cobrado a 0,1%.', 'O ISS continua integral — a redução só começa em 2029.'] },
+
+  { ano: 2029, pisCofins: false, csll: true, cbs: 'referencia', iss: true, issFator: 0.90, ibs: 'referencia',
+    resumo: 'Começa a redução do ISS: nove décimos.',
+    detalhe: ['O ISS é cobrado a 9/10 da alíquota do Município (ADCT, art. 128, I).',
+              'O IBS passa à alíquota de referência.'] },
+
+  { ano: 2030, pisCofins: false, csll: true, cbs: 'referencia', iss: true, issFator: 0.80, ibs: 'referencia',
+    resumo: 'ISS a oito décimos.',
+    detalhe: ['ADCT, art. 128, II.'] },
+
+  { ano: 2031, pisCofins: false, csll: true, cbs: 'referencia', iss: true, issFator: 0.70, ibs: 'referencia',
+    resumo: 'ISS a sete décimos.',
+    detalhe: ['ADCT, art. 128, III.'] },
+
+  { ano: 2032, pisCofins: false, csll: true, cbs: 'referencia', iss: true, issFator: 0.60, ibs: 'referencia',
+    resumo: 'ISS a seis décimos — último ano.',
+    detalhe: ['ADCT, art. 128, IV.'] },
+
+  { ano: 2033, pisCofins: false, csll: true, cbs: 'referencia', iss: false, issFator: 0, ibs: 'referencia',
+    resumo: 'ISS extinto. IBS e CBS integrais.',
+    detalhe: ['O ISS deixa de existir.', 'Restam o IBS, a CBS e as retenções federais que não foram tocadas pela reforma.'] },
+];
+
+/* Alíquotas sugeridas para quando o ano não fixa a de teste. NÃO são
+ * valores oficiais: são estimativas de trabalho, e a tela diz isso. */
+const SUGESTAO = { ibs: 17.7, cbs: 8.8 };
+
+/* Os tributos, na ordem em que aparecem na tela.
+ *   base        'servico'  incide sobre o valor do serviço menos o desconto incondicional
+ *   modos       o que a chave "como incide" oferece
+ *   existeEm    função do ano: o tributo existe neste ano?
+ *   aliquotaDe  função do ano: a alíquota sugerida, ou null para a de referência
+ */
+const TRIBUTOS = [
+  { id: 'iss', nome: 'ISSQN', padrao: 5,
+    modos: ['retido', 'nao-retido', 'nao-incide'], modoPadrao: 'retido',
+    existeEm: a => a.iss,
+    fator: a => a.issFator,
+    fonte: a => a.issFator === 1
+      ? 'Alíquota do seu Município, integral neste ano.'
+      : `Alíquota do seu Município reduzida a ${(a.issFator * 10).toFixed(0)}/10 neste ano (ADCT, art. 128).` },
+
+  { id: 'ibs', nome: 'IBS', padrao: null,
+    modos: ['por-fora', 'retido', 'nao-incide'], modoPadrao: 'por-fora',
+    existeEm: a => a.ibs !== false,
+    aliquotaDe: a => typeof a.ibs === 'number' ? a.ibs : null,
+    fonte: a => typeof a.ibs === 'number'
+      ? `Alíquota de teste de ${a.ibs.toString().replace('.', ',')}% fixada para ${a.ano} (ADCT, art. 125).`
+      : 'Alíquota de referência, fixada por ato do Senado Federal. Confirme antes de usar.' },
+
+  { id: 'cbs', nome: 'CBS', padrao: null,
+    modos: ['por-fora', 'retido', 'nao-incide'], modoPadrao: 'por-fora',
+    existeEm: a => a.cbs !== false,
+    aliquotaDe: a => typeof a.cbs === 'number' ? a.cbs : null,
+    fonte: a => typeof a.cbs === 'number'
+      ? `Alíquota de teste de ${a.cbs.toString().replace('.', ',')}% fixada para ${a.ano} (ADCT, art. 125).`
+      : 'Alíquota de referência, fixada por ato do Senado Federal. Confirme antes de usar.' },
+
+  { id: 'pis', nome: 'PIS', padrao: 0.65,
+    modos: ['retido', 'nao-incide'], modoPadrao: 'nao-incide',
+    existeEm: a => a.pisCofins,
+    fonte: () => 'Retenção na fonte, quando o tomador for obrigado a reter.' },
+
+  { id: 'cofins', nome: 'COFINS', padrao: 3,
+    modos: ['retido', 'nao-incide'], modoPadrao: 'nao-incide',
+    existeEm: a => a.pisCofins,
+    fonte: () => 'Retenção na fonte, quando o tomador for obrigado a reter.' },
+
+  { id: 'csll', nome: 'CSLL', padrao: 1,
+    modos: ['retido', 'nao-incide'], modoPadrao: 'nao-incide',
+    existeEm: a => a.csll,
+    fonte: () => 'A reforma não extinguiu a CSLL; ela segue fora do IBS e da CBS.' },
+
+  { id: 'inss', nome: 'INSS', padrao: 11,
+    modos: ['retido', 'nao-incide'], modoPadrao: 'nao-incide',
+    existeEm: () => true,
+    fonte: () => 'Retenção previdenciária sobre cessão de mão de obra e empreitada.' },
+];
+
+const ROTULO_MODO = {
+  'retido':      'Retido — desce do líquido',
+  'nao-retido':  'Não retido — o prestador recolhe',
+  'por-fora':    'Por fora — soma ao preço',
+  'nao-incide':  'Não incide',
+};
+
+const FAIXAS_IR_PADRAO = [
+  { de: 0,       ate: 5000,      aliquota: 0,    deducao: 0 },
+  { de: 5000.01, ate: 6000,      aliquota: 7.5,  deducao: 169.44 },
+  { de: 6000.01, ate: 7500,      aliquota: 15,   deducao: 381.44 },
+  { de: 7500.01, ate: 9000,      aliquota: 22.5, deducao: 662.77 },
+  { de: 9000.01, ate: 999999999, aliquota: 27.5, deducao: 896.00 },
+];
+
+/* ------------------------------------------------------------------ */
+
+const $ = id => document.getElementById(id);
+const moeda = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
+const pct = v => `${Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 4 })}%`;
+const num = v => { const n = parseFloat(String(v ?? '').replace(',', '.')); return Number.isFinite(n) ? n : null; };
+
+function anoAtivo() {
+  const a = parseInt($('anoCompetencia').value, 10);
+  return CALENDARIO.find(x => x.ano === a) || CALENDARIO[0];
+}
+
+/* --- montagem da tela ---------------------------------------------- */
+
+function montarSeletorDeAno() {
+  const sel = $('anoCompetencia');
+  const hoje = new Date().getFullYear();
+  sel.innerHTML = CALENDARIO.map(a =>
+    `<option value="${a.ano}"${a.ano === hoje ? ' selected' : ''}>${a.ano} — ${a.resumo}</option>`).join('');
+  if (!sel.value) sel.value = String(CALENDARIO[0].ano);
+}
+
+function montarPainelDoAno() {
+  const a = anoAtivo();
+  $('anoPainel').innerHTML =
+    `<b>${a.ano}:</b> ${a.resumo}<ul>${a.detalhe.map(d => `<li>${d}</li>`).join('')}</ul>`;
+}
+
+function montarCalendario() {
+  const atual = anoAtivo().ano;
+  $('corpoCalendario').innerHTML = CALENDARIO.map(a => {
+    const forte = a.ano === atual ? ' style="font-weight:600;background:#eff6ff"' : '';
+    const coluna = v => v === false ? '—' : v === 'referencia' ? 'referência' : pct(v);
+    const cbs = coluna(a.cbs), ibs = coluna(a.ibs);
+    const iss = !a.iss ? 'extinto' : a.issFator === 1 ? 'integral' : `${(a.issFator * 10).toFixed(0)}/10`;
+    return `<tr${forte}><td>${a.ano}</td><td>${a.pisCofins ? 'sim' : 'extintos'}</td>`
+      + `<td>${cbs}</td><td>${iss}</td><td>${ibs}</td></tr>`;
+  }).join('');
+}
+
+function montarTributos() {
+  const a = anoAtivo();
+  const anterior = {};
+  document.querySelectorAll('#corpoTributos tr[data-trib]').forEach(tr => {
+    const id = tr.dataset.trib;
+    anterior[id] = {
+      aliquota: $(`aliq_${id}`)?.value,
+      modo: $(`modo_${id}`)?.value,
+    };
+  });
+
+  $('corpoTributos').innerHTML = TRIBUTOS.map(t => {
+    const existe = t.existeEm(a);
+    const fixa = t.aliquotaDe ? t.aliquotaDe(a) : null;
+    const sugerida = fixa !== null && fixa !== undefined ? fixa
+      : (t.padrao !== null ? t.padrao : (SUGESTAO[t.id] ?? ''));
+    const valor = anterior[t.id]?.aliquota ?? sugerida;
+    const modo = anterior[t.id]?.modo ?? t.modoPadrao;
+    const opcoes = t.modos.map(m =>
+      `<option value="${m}"${m === modo ? ' selected' : ''}>${ROTULO_MODO[m]}</option>`).join('');
+    return `<tr data-trib="${t.id}"${existe ? '' : ' class="linha-inativa"'}>
+      <td><strong>${t.nome}</strong></td>
+      <td><input type="number" id="aliq_${t.id}" value="${valor}" step="0.01" min="0" max="100"${existe ? '' : ' disabled'}></td>
+      <td><select id="modo_${t.id}"${existe ? '' : ' disabled'}>${opcoes}</select></td>
+      <td><span class="fonte">${existe ? t.fonte(a) : `Não existe em ${a.ano}.`}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function montarTabelaIR() {
+  $('corpoIR').innerHTML = FAIXAS_IR_PADRAO.map((f, i) => `<tr>
+    <td><input type="number" id="irDe${i}" value="${f.de}" step="0.01" min="0"></td>
+    <td><input type="number" id="irAte${i}" value="${f.ate}" step="0.01" min="0"></td>
+    <td><input type="number" id="irAliq${i}" value="${f.aliquota}" step="0.01" min="0" max="100"></td>
+    <td><input type="number" id="irDed${i}" value="${f.deducao}" step="0.01" min="0"></td>
+  </tr>`).join('');
+}
+
+function lerFaixasIR() {
+  const faixas = [];
+  for (let i = 0; i < FAIXAS_IR_PADRAO.length; i++) {
+    if (!$(`irDe${i}`)) break;
+    faixas.push({
+      de: num($(`irDe${i}`).value) ?? 0,
+      ate: num($(`irAte${i}`).value) ?? Infinity,
+      aliquota: (num($(`irAliq${i}`).value) ?? 0) / 100,
+      deducao: num($(`irDed${i}`).value) ?? 0,
+    });
+  }
+  return faixas;
+}
+
+/* Buracos e sobreposições entre faixas fazem o imposto saltar sem que
+ * ninguém perceba. A calculadora não conserta — avisa. */
+function conferirFaixas(faixas) {
+  const avisos = [];
+  for (let i = 1; i < faixas.length; i++) {
+    const fim = faixas[i - 1].ate, ini = faixas[i].de;
+    if (ini > fim + 0.011) avisos.push(`Há um vão entre ${moeda(fim)} e ${moeda(ini)}: quem cair nele não tem faixa.`);
+    if (ini <= fim - 0.011) avisos.push(`As faixas ${i} e ${i + 1} se sobrepõem entre ${moeda(ini)} e ${moeda(fim)}.`);
+  }
+  return avisos;
+}
+
+function irDe(base, faixas) {
+  for (const f of faixas) {
+    if (base > f.de - 0.005 && base <= f.ate) return Math.max(0, base * f.aliquota - f.deducao);
+  }
+  return 0;
+}
+
+function faixaDe(base, faixas) {
+  for (const f of faixas) if (base > f.de - 0.005 && base <= f.ate) return f;
+  return null;
+}
+
+/* --- o cálculo ------------------------------------------------------ */
+
+function lerConfiguracao() {
+  const a = anoAtivo();
+  const trib = {};
+  for (const t of TRIBUTOS) {
+    const existe = t.existeEm(a);
+    trib[t.id] = {
+      nome: t.nome,
+      existe,
+      aliquota: existe ? (num($(`aliq_${t.id}`)?.value) ?? 0) / 100 : 0,
+      fator: t.fator ? t.fator(a) : 1,
+      modo: existe ? ($(`modo_${t.id}`)?.value ?? 'nao-incide') : 'nao-incide',
+    };
+  }
+  const d = tipo => {
+    const ligado = $(`tem${tipo}`).checked;
+    const porAliquota = document.querySelector(`input[name="${tipo.charAt(0).toLowerCase()}${tipo.slice(1)}Tipo"]:checked`)?.value === 'aliquota';
+    return {
+      ligado,
+      porAliquota,
+      aliquota: (num($(`${tipo.charAt(0).toLowerCase()}${tipo.slice(1)}Aliquota`)?.value) ?? 0) / 100,
+      valor: num($(`${tipo.charAt(0).toLowerCase()}${tipo.slice(1)}Valor`)?.value) ?? 0,
+    };
+  };
+  return {
+    ano: a,
+    trib,
+    temIR: $('temIR').checked,
+    faixasIR: lerFaixasIR(),
+    incondicional: d('DescontoIncondicional'),
+    condicional: d('DescontoCondicional'),
+  };
+}
+
+/* Dado o valor do serviço, quanto o prestador recebe. É esta função que
+ * a busca inverte. Ela devolve também o detalhe, para não recalcular
+ * nada depois — o que evita que o resumo e o total discordem. */
+function liquidoDe(servico, cfg) {
+  const dInc = !cfg.incondicional.ligado ? 0
+    : cfg.incondicional.porAliquota ? servico * cfg.incondicional.aliquota : cfg.incondicional.valor;
+  const base = Math.max(0, servico - dInc);
+
+  const dCond = !cfg.condicional.ligado ? 0
+    : cfg.condicional.porAliquota ? servico * cfg.condicional.aliquota : cfg.condicional.valor;
+
+  const linhas = [];
+  let retido = 0, porFora = 0, naoRetido = 0;
+
+  for (const t of TRIBUTOS) {
+    const c = cfg.trib[t.id];
+    if (!c.existe || c.modo === 'nao-incide') continue;
+    const aliqEfetiva = c.aliquota * (c.fator ?? 1);
+    const valor = base * aliqEfetiva;
+    if (c.modo === 'retido') retido += valor;
+    else if (c.modo === 'por-fora') porFora += valor;
+    else naoRetido += valor;
+    linhas.push({ id: t.id, nome: c.nome, modo: c.modo, aliqEfetiva, valor });
+  }
+
+  const ir = cfg.temIR ? irDe(base, cfg.faixasIR) : 0;
+  if (cfg.temIR) {
+    retido += ir;
+    linhas.push({ id: 'ir', nome: 'IR', modo: 'retido', aliqEfetiva: base > 0 ? ir / base : 0, valor: ir });
+  }
+
+  return {
+    servico, base, dInc, dCond, retido, porFora, naoRetido, ir, linhas,
+    liquido: base - dCond - retido,
+    totalTomador: base - dCond + porFora,
+  };
+}
+
+/* Busca por bisseção.
+ *
+ * O método anterior somava a diferença vezes 1,05 a cada volta. Ele
+ * converge bem enquanto as retenções somam menos que o valor do serviço
+ * — testado, converge em duas a doze voltas nos casos reais. Mas quando
+ * a soma das alíquotas chega a 100%, ele diverge: com 105% marcados por
+ * engano, sai de mil reais e chega a 3,5 × 10²⁶ sem avisar nada.
+ *
+ * A bisseção não tem esse problema, porque o líquido cresce junto com o
+ * serviço: basta fechar o intervalo. E quando a conta é impossível — as
+ * retenções comendo tudo o que se acrescenta —, ela diz que é, em vez
+ * de devolver um número absurdo. */
+function resolver(alvo, cfg) {
+  let hi = Math.max(alvo * 4, alvo + 1000);
+  let i = 0;
+  while (liquidoDe(hi, cfg).liquido < alvo && i < 60) { hi *= 2; i++; }
+  if (liquidoDe(hi, cfg).liquido < alvo) {
+    // por mais que se aumente o serviço, o líquido não alcança o pedido
+    const r = liquidoDe(alvo, cfg);
+    return { ...r, impossivel: true };
+  }
+  let lo = 0;
+  for (let k = 0; k < 200; k++) {
+    const meio = (lo + hi) / 2;
+    if (liquidoDe(meio, cfg).liquido < alvo) lo = meio; else hi = meio;
+    if (hi - lo < 0.0005) break;
+  }
+  return liquidoDe((lo + hi) / 2, cfg);
+}
+
+function calcular() {
+  const alvo = num($('valorLiquido').value);
+  if (!alvo || alvo <= 0) { alert('Informe um valor líquido maior que zero.'); return; }
+
+  const cfg = lerConfiguracao();
+  const avisos = cfg.temIR ? conferirFaixas(cfg.faixasIR) : [];
+  const r = resolver(alvo, cfg);
+
+  const cartao = (titulo, valor, nota, destaque) =>
+    `<div class="result-card${destaque ? ' destaque' : ''}"><h4>${titulo}</h4>`
+    + `<div class="value">${valor}</div>${nota ? `<div class="percentage">${nota}</div>` : ''}</div>`;
+
+  let html = cartao('Valor do serviço', moeda(r.servico), `na nota, ano ${cfg.ano.ano}`, true);
+
+  if (r.dInc > 0) html += cartao('Desconto incondicional', `− ${moeda(r.dInc)}`, 'reduz a base');
+  if (r.dInc > 0) html += cartao('Base de cálculo', moeda(r.base), 'depois do desconto incondicional');
+
+  for (const l of r.linhas) {
+    const nota = `${pct(l.aliqEfetiva * 100)} · ${ROTULO_MODO[l.modo].toLowerCase()}`;
+    html += cartao(l.nome, moeda(l.valor), l.id === 'ir' ? notaDoIR(r, cfg) : nota);
+  }
+
+  if (r.dCond > 0) html += cartao('Desconto condicional', `− ${moeda(r.dCond)}`, 'não reduz a base');
+
+  html += cartao('Total retido', moeda(r.retido),
+    r.base > 0 ? `${pct((r.retido / r.base) * 100)} da base` : '');
+  if (r.porFora > 0) {
+    html += cartao('Somado por fora', `+ ${moeda(r.porFora)}`, 'quem paga é o tomador');
+    html += cartao('Total pago pelo tomador', moeda(r.totalTomador), 'serviço menos descontos, mais IBS e CBS');
+  }
+  if (r.naoRetido > 0) {
+    html += cartao('A recolher pelo prestador', moeda(r.naoRetido),
+      'não retido na nota — sai depois, do bolso de quem prestou');
+  }
+  html += cartao('Líquido a receber', moeda(r.liquido), 'confere com o que você pediu', true);
+
+  $('resultGrid').innerHTML = html;
+
+  const erro = Math.abs(r.liquido - alvo);
+  let memoria = '';
+  if (r.impossivel) {
+    memoria += `<div class="info-box aviso"><strong>Não há valor de serviço que produza esse líquido.</strong>
+      As retenções marcadas consomem tudo o que se acrescenta ao serviço — some as alíquotas retidas e
+      confira: se chegarem a 100%, aumentar o valor da nota não aumenta o que o prestador recebe.</div>`;
+  } else if (erro > 0.01) {
+    memoria += `<div class="info-box aviso"><strong>Não fechou exatamente.</strong> O líquido calculado é
+      ${moeda(r.liquido)}, ${moeda(erro)} longe do pedido. Isso acontece quando um desconto por valor fixo
+      é maior que o próprio serviço, ou quando as faixas do IR têm um salto — confira os dados.</div>`;
+  }
+  for (const a of avisos) {
+    memoria += `<div class="info-box aviso"><strong>Tabela do IR:</strong> ${a}</div>`;
+  }
+  if (r.porFora > 0) {
+    memoria += `<div class="info-box"><strong>Por fora não muda o seu líquido.</strong> O IBS e a CBS
+      marcados como "por fora" somam ao que o tomador paga e são destacados na nota; quem os recolhe
+      repassa. Por isso o valor do serviço não subiu por causa deles.</div>`;
+  }
+  if (cfg.ano.ano === 2026) {
+    memoria += `<div class="info-box"><strong>Lembre do ano de teste.</strong> Em 2026 a CBS de 0,9% e o
+      IBS de 0,1% são compensáveis com PIS e COFINS, e quem cumpre as obrigações acessórias fica
+      dispensado do recolhimento. A calculadora mostra o valor cheio; o aproveitamento é da apuração.</div>`;
+  }
+  $('memoria').innerHTML = memoria;
+
+  $('results').style.display = 'block';
+  $('noResults').style.display = 'none';
+}
+
+function notaDoIR(r, cfg) {
+  if (r.ir <= 0) return 'isento nesta faixa';
+  const f = faixaDe(r.base, cfg.faixasIR);
+  const efetiva = (r.ir / r.base) * 100;
+  return f
+    ? `faixa de ${pct(f.aliquota * 100)} · efetiva ${pct(efetiva)} da base`
+    : `efetiva ${pct(efetiva)} da base`;
+}
+
+/* --- eventos -------------------------------------------------------- */
+
+function aoMudarAno() {
+  montarPainelDoAno();
+  montarTributos();
+  montarCalendario();
+}
+
+function ligarDesconto(prefixo, campoTipo) {
+  const aliq = $(`${prefixo}Aliquota`), val = $(`${prefixo}Valor`);
+  const sincronizar = () => {
+    const porAliquota = document.querySelector(`input[name="${campoTipo}"]:checked`)?.value === 'aliquota';
+    aliq.disabled = !porAliquota;
+    val.disabled = porAliquota;
+  };
+  document.querySelectorAll(`input[name="${campoTipo}"]`).forEach(r => r.addEventListener('change', sincronizar));
+  sincronizar();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  montarSeletorDeAno();
+  montarTabelaIR();
+  aoMudarAno();
+
+  $('anoCompetencia').addEventListener('change', aoMudarAno);
+  $('btnCalcular').addEventListener('click', calcular);
+  $('valorLiquido').addEventListener('keypress', e => { if (e.key === 'Enter') calcular(); });
+
+  $('temIR').addEventListener('change', function () { $('irTable').classList.toggle('show', this.checked); });
+  $('temDescontoIncondicional').addEventListener('change', function () {
+    $('descontoIncondicionalConfig').classList.toggle('show', this.checked);
+  });
+  $('temDescontoCondicional').addEventListener('change', function () {
+    $('descontoCondicionalConfig').classList.toggle('show', this.checked);
+  });
+
+  ligarDesconto('incondicional', 'incondicionalTipo');
+  ligarDesconto('condicional', 'condicionalTipo');
+});
+</script>
 </body>
 </html>
