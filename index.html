@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Descubra quanto cobrar pelo serviço para preservar o líquido desejado, considerando ISS, IBS, CBS, retenções e descontos.">
+<title>Calculadora Reversa · IBS e CBS 2027</title>
+<style>:root{color-scheme:light;--ink:#132d3a;--muted:#526777;--accent:#086f6c;--line:#dbe4e8;--paper:#fff;--bg:#f1f5f5;--radius:18px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button,a,input,select,summary{-webkit-tap-highlight-color:transparent}a{color:#086f6c}a:hover{text-decoration-thickness:2px}.wrap{max-width:1300px;margin:auto;padding-left:28px;padding-right:28px}.hero{background:#102f3d;color:white;padding:46px 0 72px}.eyebrow{display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.13em;font-weight:650}.eyebrow span{color:#b6efda;border:1px solid #4c746f;border-radius:30px;padding:3px 11px;font-size:11px;letter-spacing:.08em}h1{font-size:clamp(30px,3.5vw,46px);line-height:1.15;letter-spacing:-.035em;margin:20px 0 15px;font-weight:700}.hero p{max-width:660px;color:#ccdee5;font-size:17px;margin:0}.hero-meta{display:flex;gap:12px;flex-wrap:wrap;color:#a8c3cd;font-size:12px;margin-top:22px}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start;margin-top:-32px}form{display:grid;gap:20px}.panel{border:1px solid var(--line);background:var(--paper);border-radius:var(--radius);padding:26px;box-shadow:0 5px 20px #132d3a05}.section-heading{display:flex;gap:12px;align-items:flex-start;margin-bottom:22px}.step{background:#e6f4ef;color:var(--accent);font-weight:700;font-size:12px;min-width:32px;height:32px;display:grid;place-items:center;border-radius:10px}h2{font-size:19px;line-height:1.3;margin:2px 0 4px;letter-spacing:-.025em}.section-heading p{color:var(--muted);font-size:13px;margin:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.wide{grid-column:1/-1}label{display:block;font-size:13px;font-weight:600}input:not([type=checkbox]),select{width:100%;margin-top:6px;border:1px solid #c4d4dc;border-radius:9px;padding:10px 12px;min-height:44px;background:white;color:var(--ink)}select{padding-right:22px}input.money-input{font-size:29px;padding:12px 16px;font-weight:650;background:#f7fbfa;color:#075a57}input:disabled,select:disabled{background:#eff3f4;color:#546774;cursor:not-allowed}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #64aca6;outline-offset:3px}.notice{font-size:13px;background:#eef7f4;border:1px solid #d1e9df;border-radius:10px;padding:13px 15px;margin-top:16px}.warning{background:#fff8e9;border-color:#ead7a6;color:#685020}.error{background:#fff0ee;border-color:#e4b2aa;color:#8f3025}.help{display:block;font-size:12px;color:var(--muted);font-weight:400;line-height:1.65;margin:10px 0 0}.tax-list{display:grid;gap:12px}.tax-row{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fcfdfd}.tax-top{display:grid;grid-template-columns:70px 90px minmax(0,1fr);gap:10px;align-items:end}.tax-name{font-size:14px;align-self:center;font-weight:650}.tax-top label{font-size:11px}.tax-extra{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.tax-extra label{font-size:11px}.tax-extra input,.tax-top input,.tax-top select{padding:8px;font-size:13px}.tax-row.off{background:#f5f7f8}.check{display:flex;gap:10px;align-items:flex-start;margin:17px 0;font-size:13px;font-weight:500}input[type=checkbox]{margin:3px 0 0;width:17px;height:17px;accent-color:var(--accent);flex-shrink:0}.inset{padding:16px;background:#f6f9f9;border:1px solid var(--line);border-radius:12px}details{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}summary{font-weight:600;cursor:pointer;font-size:14px}details .inset{margin-top:12px}.discount-row{display:grid;grid-template-columns:1fr 130px 110px;gap:10px;align-items:end;margin-bottom:15px}.discount-row>span{font-size:13px;font-weight:600;align-self:center}.discount-row label{font-size:11px}.primary{background:var(--accent);color:white;border:0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;width:100%;border-radius:11px;padding:15px 18px;font-weight:650;margin-top:22px}.primary:hover{background:#075954}.primary span{font-size:22px}.result-panel{position:sticky;top:20px}.empty{padding:45px 10px;text-align:center;color:var(--muted)}.empty-symbol{font-size:35px;color:#0b7771;background:#eaf4f0;width:85px;height:85px;display:grid;place-items:center;border-radius:24px;margin:0 auto 22px}.empty h3{font-size:20px;color:var(--ink);margin:0 0 8px}.empty p{font-size:14px;max-width:320px;margin:auto}.featured{background:#0d635e;color:white;border-radius:13px;padding:24px}.featured span{font-size:10px;letter-spacing:.11em;display:block}.featured strong{font-size:clamp(26px,3vw,37px);line-height:1.5;display:block;overflow-wrap:anywhere;margin-top:5px}.featured p{font-size:12px;color:#d0e9e3;margin:6px 0 0}.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.result-card{border:1px solid var(--line);border-radius:11px;padding:14px}.result-card span{font-size:11px;color:var(--muted);display:block}.result-card strong{display:block;font-size:20px;margin-top:5px;overflow-wrap:anywhere}.result-card p{margin:6px 0 0;font-size:11px;color:var(--muted)}.result-card.highlight{border-color:#94cbbc;background:#eff8f3}.small-title{font-size:14px;margin:25px 0 10px}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}td,th{padding:11px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:600;font-size:11px;background:#f6f9f9}td:first-child{font-weight:600}td:last-child{white-space:normal;min-width:100px}.actions{display:flex;gap:10px;margin-top:18px}.actions button{border:1px solid var(--line);color:var(--ink);background:white;border-radius:8px;padding:9px 13px;cursor:pointer;font-size:12px}.actions button:hover{background:#eef5f3}.sources{grid-column:1/-1;margin-top:5px}.sources>p{font-size:13px;color:var(--muted);max-width:950px}.source-links{padding-left:20px;font-size:12px;line-height:1.8;display:grid;gap:5px;margin-top:18px}footer{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);padding-top:28px;padding-bottom:28px}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(min-width:1000px){aside{position:sticky;top:20px}}@media(max-width:900px){.layout{grid-template-columns:1fr}.hero{padding-top:30px}.result-panel{position:static}}@media(max-width:520px){.wrap{padding-left:14px;padding-right:14px}.panel{padding:18px;border-radius:14px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.tax-top{grid-template-columns:60px 80px minmax(0,1fr);gap:7px}.tax-extra{grid-template-columns:1fr}.discount-row{grid-template-columns:1fr 1fr}.discount-row>span{grid-column:1/-1}.result-grid{gap:8px}.result-card{padding:11px}.result-card strong{font-size:18px}.eyebrow{font-size:10px;gap:8px}.hero-meta{font-size:11px}footer{flex-direction:column}.hero p{font-size:15px}}@media print{body{background:white}.hero{background:white;color:#132d3a;padding:10px 0}.hero p,.hero-meta{color:#526777}form,.sources,.actions,#emptyResult,footer,.hero-meta{display:none!important}.layout{display:block;margin-top:15px}.panel{box-shadow:none;border:0;padding:0}aside,.result-panel{position:static}.featured{background:white;color:#132d3a;border:2px solid #086f6c}.featured p{color:#526777}.result-card,table,.notice{break-inside:avoid}.hero .eyebrow span{color:#086f6c}}
+:is(form,aside,.panel,.grid>*,.tax-top>*,.tax-extra>*,.discount-row>*){min-width:0}input,select{min-width:0}.layout>form,.layout>aside,.table-scroll{max-width:100%}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap"><div class="eyebrow">CALCULADORA REVERSA NFS-e <span>EDIÇÃO 2027</span></div>
+<h1>Seu líquido é o ponto de partida.</h1><p>Descubra quanto cobrar pelo serviço e quanto o tomador deve pagar durante a transição para o IBS e a CBS.</p>
+<div class="hero-meta">2025 — 2033 <span>•</span> Funciona offline <span>•</span> Regras revisadas em 05/10/2026</div></div></header>
+<main class="wrap layout">
+<form id="calculator" novalidate>
+<section class="panel"><div class="section-heading"><span class="step">01</span><div><h2>Defina o valor que quer preservar</h2><p>Escolha a competência e o objetivo da simulação.</p></div></div>
+<div class="grid"><label class="wide">Líquido desejado (R$)<input id="target" class="money-input" type="number" min="0.01" max="100000000" step="0.01" value="1200" required inputmode="decimal"></label>
+<label>Ano da competência<select id="year"></select></label>
+<label>Objetivo do líquido<select id="goal"><option value="after-tax">Após todos os tributos incluídos</option><option value="payment">Após retenções e reserva de IBS/CBS</option></select></label>
+<label>Regime de cálculo<select id="regime"><option value="regular">Tributos discriminados / IBS-CBS regular</option><option value="manual">Simples, MEI ou composição manual</option></select></label>
+<label>Tomador<select id="buyer"><option value="private">Pessoa ou empresa privada</option><option value="public">Administração pública</option></select></label></div>
+<div class="notice" id="yearNotice"></div>
+<p class="help" id="goalHelp"></p>
+<div class="notice warning" id="manualNotice" hidden>Informe a carga efetiva aplicável em “DAS / outra carga”. Evite contar novamente tributos já incluídos no DAS. Se IBS/CBS forem recolhidos fora do Simples, use o regime regular e informe os demais tributos separadamente. Este modo não calcula anexos, fator R ou receita acumulada.</div>
+</section>
+<section class="panel"><div class="section-heading"><span class="step">02</span><div><h2>Tributos e retenções</h2><p>Selecione somente o que se aplica ao prestador e à operação.</p></div></div>
+<div class="tax-list" id="taxes"></div>
+<p class="help">“Prestador recolhe” entra no líquido após tributos. “Retido” reduz o pagamento. Percentuais iniciais de ISS e retenções são campos de trabalho editáveis, não enquadramento automático. Não são calculados limites de dispensa, créditos, lucro, IRPJ ou apuração mensal de CSLL.</p>
+<label class="check"><input id="rtcEnabled" type="checkbox" checked> Incluir IBS e CBS no regime regular</label>
+<div id="rtcFields" class="inset">
+<div class="grid"><label>IBS total (%)<input id="ibs" type="number" min="0" max="99.99" step="0.0001" value="0.1"></label>
+<label>CBS antes do ajuste transitório (%)<input id="cbs" type="number" min="0" max="99.99" step="0.0001" placeholder="Informe a alíquota aplicável"></label>
+<label>Redução de alíquota IBS/CBS<select id="reduction"><option value="0">Sem redução</option><option value="30">30% — sujeito ao art. 127</option><option value="60">60% — sujeito aos arts. 128 a 130</option><option value="100">100% — confirme a hipótese legal</option></select></label>
+<label>Forma de recolhimento<select id="rtcCollection"><option value="supplier">Prestador recebe e depois recolhe</option><option value="separated">Segregado no pagamento / tomador recolhe</option></select></label></div>
+<label class="check"><input id="effectiveRates" type="checkbox"> Informar alíquotas finais, já com ajustes e reduções</label>
+<p class="help" id="rateHelp"></p>
+<label class="check" id="dispensedLabel" hidden><input id="dispensed2026" type="checkbox" checked> 2026: recolhimento dispensado por cumprimento das obrigações acessórias</label>
+<label class="check" id="publicLabel" hidden><input id="publicConfirmed" type="checkbox"> Confirmei as alíquotas finais para esta compra pública, incluindo o redutor e as regras de destinação.</label>
+<p class="help" id="publicHelp" hidden>Compras públicas têm regras próprias. O aplicativo não presume que o tomador recolhe nem aplica automaticamente os arts. 472–473 da LC 214. Informe as alíquotas finais da operação, após conferir também as exceções e a transição no regulamento.</p>
+<label id="legacyLabel" hidden>PIS/COFINS incidentes a excluir da base IBS/CBS (%)<input id="excludedLegacy" type="number" value="0" min="0" max="100" step="0.0001"><span class="help">Informe a incidência da operação, se houver. Retenção na fonte não é a alíquota da apuração. A exclusão não gera um segundo desconto do líquido.</span></label>
+<p class="help">IBS/CBS são somados por fora sobre sua própria base. Até 2032, excluímos o ISS incidente e, em 2026, o PIS/COFINS informado acima. CSLL, INSS e IR retidos não são excluídos automaticamente dessa base. Reduções exigem enquadramento legal: profissão, atividade e NBS, conforme o caso.</p>
+</div>
+<details><summary>Imposto de Renda</summary><div class="inset">
+<label>Como calcular o IR<select id="irMode"><option value="none">Não incluir</option><option value="flat">Retenção configurável por alíquota</option><option value="monthly">IRPF mensal — parâmetros de 2026</option></select></label>
+<div id="irFlat" class="grid" hidden><label>IR (%)<input id="irRate" type="number" value="1.5" min="0" max="99.99" step="0.0001"></label><label>Parcela a deduzir (R$)<input id="irDeduction" type="number" value="0" min="0" step="0.01"></label><label>Percentual do serviço na base (%)<input id="irBasePercent" type="number" value="100" min="0" max="100" step="0.0001"></label><p class="help">Configure a retenção aplicável ao serviço e ao tomador. Para retenções de órgãos públicos, consulte o Anexo I da IN RFB 1.234/2012 e suas alterações; 1,5% não é uma regra universal.</p></div>
+<div id="irMonthly" hidden><div class="grid"><label>Outros rendimentos do mês da mesma fonte (R$)<input id="otherIncome" type="number" value="0" min="0" step="0.01"></label><label>IR já retido pela fonte no mês (R$)<input id="previousTax" type="number" value="0" min="0" step="0.01"></label><label>Dedução mensal<select id="deductionMode"><option value="legal">INSS desta operação + outras deduções legais</option><option value="simplified">Desconto simplificado de R$ 607,20</option></select></label><label>Outras deduções legais do mês (R$)<input id="otherDeductions" type="number" value="0" min="0" step="0.01"></label></div>
+<label class="check"><input id="irConfirmed" type="checkbox"> Confirmei que os parâmetros de IRPF de 2026 se aplicam a esta competência.</label>
+<p class="help">Tabela progressiva com parcela a deduzir e redução mensal da Lei 15.270/2025: até R$ 5 mil e entre R$ 5 mil e R$ 7.350. Usa os rendimentos mensais para a redução e a base após deduções para a tabela. Não calcula ajuste anual ou outras fontes pagadoras. A confirmação é necessária também em 2027; parâmetros futuros não são presumidos.</p></div></div></details>
+</section>
+<section class="panel"><div class="section-heading"><span class="step">03</span><div><h2>Descontos e ajustes</h2><p>Preencha apenas os descontos que constam da operação.</p></div></div>
+<div id="discounts"></div><p class="help">O desconto incondicional reduz o serviço e a base IBS/CBS. O condicional e o outro desconto reduzem o pagamento, sem reduzir automaticamente as bases. Para uma base diferente de retenção, ajuste o percentual no tributo.</p>
+<div id="error" class="notice error" role="alert" hidden></div>
+<button class="primary" type="submit">Calcular quanto cobrar <span aria-hidden="true">→</span></button>
+</section>
+</form>
+<aside><section class="panel result-panel" aria-live="polite" aria-atomic="true"><div class="section-heading"><span class="step">=</span><div><h2>Seu cálculo, explicado</h2><p id="resultSubtitle">Os valores aparecem após o cálculo.</p></div></div>
+<div id="emptyResult" class="empty"><div class="empty-symbol" aria-hidden="true">R$</div><h3>Comece pelo seu líquido</h3><p>Informe os tributos da operação para obter o valor do serviço, o total cobrado e a reserva para recolhimento.</p></div>
+<div id="result" hidden><div class="featured"><span>VALOR DO SERVIÇO ANTES DOS DESCONTOS</span><strong id="serviceResult"></strong><p>Preço do serviço, com ISS quando incidente, antes de somar IBS/CBS.</p></div>
+<div class="result-grid" id="resultCards"></div>
+<h3 class="small-title">Memória de cálculo</h3><div class="table-scroll"><table><caption class="sr-only">Tributos, bases e destinação</caption><thead><tr><th>Tributo</th><th>Base</th><th>Valor</th><th>Destino</th></tr></thead><tbody id="resultRows"></tbody></table></div>
+<div id="reconciliation" class="notice"></div><div class="actions"><button type="button" id="copyResult">Copiar memória</button><button type="button" id="printResult">Imprimir</button></div><p id="copyStatus" class="help" role="status"></p></div>
+</section></aside>
+<section class="panel sources"><h2>Transição e fontes oficiais</h2><p>As datas vêm da EC 132/2023 e da LC 214/2025, com alterações da LC 227/2026. A revisão não identificou uma alíquota numérica de referência CBS 2027 confirmada para preencher automaticamente.</p>
+<div class="table-scroll"><table><caption class="sr-only">Calendário da transição de 2025 a 2033</caption><thead><tr><th>Ano</th><th>PIS/COFINS</th><th>ISS municipal</th><th>IBS</th><th>CBS</th></tr></thead><tbody id="calendarRows"></tbody></table></div>
+<ul class="source-links"><li><a href="https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp214compilado.htm" target="_blank" rel="noopener noreferrer">LC 214/2025 compilada</a> — art. 12 (bases), arts. 127–130 (reduções), arts. 343–349 (transição), arts. 472–473 (compras públicas).</li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc132.htm" target="_blank" rel="noopener noreferrer">EC 132/2023</a> — ADCT, arts. 125–129 (calendário do ISS e dos novos tributos).</li>
+<li><a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026" target="_blank" rel="noopener noreferrer">Receita Federal: IRPF 2026</a> — tabela progressiva e redução mensal.</li>
+<li><a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer">INSS: tabela e teto 2026</a> — R$ 8.475,55; o teto de 2027 deve ser informado após confirmação.</li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/2003/l10.666.htm" target="_blank" rel="noopener noreferrer">Lei 10.666/2003, art. 4º</a> e <a href="https://www.planalto.gov.br/ccivil_03/leis/l8212cons.htm" target="_blank" rel="noopener noreferrer">Lei 8.212/1991, art. 31</a> — regimes distintos de contribuição e retenção previdenciária.</li></ul>
+<p class="help">A calculadora forma preço para os tributos e descontos selecionados. Ela não apura lucro, créditos IBS/CBS, obrigações acessórias, anexos do Simples ou enquadramento fiscal. A segregação no pagamento é um cenário de caixa, cuja aplicação depende das regras da operação. Confirme os parâmetros antes de emitir a NFS-e.</p></section>
+</main><footer class="wrap">Calculadora Reversa · v2.0 <span>Sem envio de dados. Sem dependências externas.</span></footer>
+<script>/* Motor sem DOM ou dependências. Valores em reais; arredondamento por rubrica. */
+(function (root) {
+  'use strict';
+  const round = value => Math.round((value + Number.EPSILON * Math.max(1, Math.abs(value)) * 8) * 100) / 100;
+  const ISS_FACTORS = { 2025: 1, 2026: 1, 2027: 1, 2028: 1, 2029: .9, 2030: .8, 2031: .7, 2032: .6, 2033: 0 };
+  function calendar(year) {
+    if (!Object.hasOwn(ISS_FACTORS, year)) throw new Error('Selecione um ano entre 2025 e 2033.');
+    return { year, issFactor: ISS_FACTORS[year], legacy: year <= 2026,
+      ibs: year === 2025 ? 0 : year <= 2028 ? .1 : null,
+      cbs: year === 2025 ? 0 : year === 2026 ? .9 : null,
+      cbsAdjustment: year === 2027 || year === 2028 ? .1 : 0 };
+  }
+  function number(value, label, max = 1e9) {
+    if (value === '' || value === null || value === undefined || typeof value !== 'number' ||
+        !Number.isFinite(value) || value < 0 || value > max) throw new Error(`${label}: informe um valor válido entre 0 e ${max}.`);
+    return value;
+  }
+  function validate(c) {
+    const a = calendar(c.year);
+    number(c.target, 'Líquido desejado', 1e8);
+    if (c.target <= 0 || round(c.target) !== c.target) throw new Error('Informe o líquido positivo com até duas casas decimais.');
+    if (!['payment', 'after-tax'].includes(c.goal)) throw new Error('Objetivo de líquido inválido.');
+    if (!['regular', 'manual'].includes(c.regime)) throw new Error('Regime inválido.');
+    if (!['private', 'public'].includes(c.buyer)) throw new Error('Tomador inválido.');
+    for (const d of [c.unconditional, c.conditional, c.other]) {
+      if (!d || !['fixed', 'percent'].includes(d.type)) throw new Error('Tipo de desconto inválido.');
+      number(d.value, 'Desconto', d.type === 'percent' ? 99.99 : 1e8);
+    }
+    for (const [id, t] of Object.entries(c.taxes)) {
+      if (!['none', 'retained', 'own', 'pf'].includes(t.mode)) throw new Error(`${id}: tratamento inválido.`);
+      if (!['service', 'rtc'].includes(t.base)) throw new Error(`${id}: base inválida.`);
+      if (t.mode !== 'none') {
+        number(t.rate, `Alíquota de ${id}`, 99.99);
+        number(t.basePercent, `Percentual da base de ${id}`, 100);
+        if (t.mode === 'pf') {
+          if (id !== 'inss') throw new Error('Limite de pessoa física só se aplica ao INSS.');
+          number(t.remainingCap, 'Base mensal disponível do INSS');
+        }
+      }
+      if (['pis', 'cofins'].includes(id) && !a.legacy && t.mode !== 'none') throw new Error('PIS e COFINS não se aplicam a partir de 2027 neste modelo.');
+      if (id === 'iss' && a.issFactor === 0 && t.mode !== 'none') throw new Error('ISS extinto em 2033.');
+    }
+    number(c.excludedLegacy, 'PIS/COFINS incidentes excluídos da base', 100);
+    if (!a.legacy && c.excludedLegacy !== 0) throw new Error('Não exclua PIS/COFINS da base a partir de 2027.');
+    number(c.reduction, 'Redução do IBS/CBS', 100);
+    if (c.rtcEnabled) {
+      if (c.year === 2025) throw new Error('IBS/CBS não se aplicam em 2025.');
+      if (c.regime === 'manual') throw new Error('Para IBS/CBS fora do DAS, selecione regime regular.');
+      if (!['supplier', 'separated'].includes(c.rtcCollection)) throw new Error('Recolhimento do IBS/CBS inválido.');
+      for (const id of ['ibs', 'cbs']) {
+        const fixed = a[id];
+        if (c.effectiveRates || fixed === null) number(c[id], `Alíquota de ${id.toUpperCase()}`, 99.99);
+      }
+      if (c.effectiveRates && c.reduction !== 0) throw new Error('Alíquotas finais já incluem reduções: use redução adicional zero.');
+      if (!c.effectiveRates && a.cbsAdjustment && c.cbs < a.cbsAdjustment) throw new Error('A CBS antes do ajuste deve ser pelo menos 0,1%.');
+      if (c.buyer === 'public' && (!c.effectiveRates || !c.publicConfirmed)) throw new Error('Compras públicas: informe e confirme as alíquotas finais aplicáveis, com redutor e destinação verificados.');
+    }
+    if (!['none', 'flat', 'monthly'].includes(c.ir.mode)) throw new Error('Modo do IR inválido.');
+    if (c.ir.mode === 'flat') {
+      number(c.ir.rate, 'Alíquota do IR', 99.99);
+      number(c.ir.deduction, 'Parcela a deduzir do IR');
+      number(c.ir.basePercent, 'Percentual da base de IR', 100);
+    }
+    if (c.ir.mode === 'monthly') {
+      if (c.year < 2026 || !c.ir.confirmed) throw new Error('IRPF: confirme a aplicação dos parâmetros mensais de 2026 à competência escolhida.');
+      for (const key of ['otherIncome', 'previousTax', 'otherDeductions']) number(c.ir[key], 'Parâmetro mensal do IRPF');
+      if (!['legal', 'simplified'].includes(c.ir.deductionMode)) throw new Error('Dedução de IRPF inválida.');
+    }
+    // Uma margem positiva garante inversão crescente antes do arredondamento.
+    let burden = 0;
+    for (const [id, t] of Object.entries(c.taxes)) {
+      if (t.mode === 'none' || (t.mode === 'own' && c.goal === 'payment')) continue;
+      burden += t.rate / 100 * t.basePercent / 100 * (id === 'iss' ? a.issFactor : 1);
+    }
+    if (c.ir.mode === 'flat') burden += c.ir.rate / 100 * c.ir.basePercent / 100;
+    if (c.ir.mode === 'monthly') burden += .275 + .133145;
+    const inc = c.unconditional.type === 'percent' ? c.unconditional.value / 100 : 0;
+    const cond = [c.conditional, c.other].reduce((n, d) => n + (d.type === 'percent' ? d.value / 100 : 0), 0);
+    if ((1 - inc) * (1 - burden) - cond <= 0) throw new Error('Descontos e tributos consomem a margem. Reduza os percentuais para calcular com segurança.');
+    return a;
+  }
+  function monthlyIR(income, deductions) {
+    const base = Math.max(0, income - deductions);
+    const tiers = [[2428.80, 0, 0], [2826.65, .075, 182.16], [3751.05, .15, 394.16], [4664.68, .225, 675.49], [Infinity, .275, 908.73]];
+    const [, rate, deduction] = tiers.find(t => base <= t[0]);
+    const tax = Math.max(0, base * rate - deduction);
+    const reduction = income <= 5000 ? Math.min(tax, 312.89) : income <= 7350 ? Math.max(0, 978.62 - .133145 * income) : 0;
+    return tax - reduction < 1e-9 ? 0 : tax - reduction;
+  }
+  function forward(service, c, rounded = true) {
+    const a = calendar(c.year);
+    const money = rounded ? round : v => v;
+    const discount = d => money(d.type === 'percent' ? service * d.value / 100 : d.value);
+    const unconditional = discount(c.unconditional);
+    const base = money(Math.max(0, service - unconditional));
+    const conditional = discount(c.conditional), other = discount(c.other);
+    let retained = 0, own = 0;
+    const rows = [];
+    const taxBase = t => money(base * t.basePercent / 100);
+    const issConfig = c.taxes.iss;
+    const iss = issConfig && issConfig.mode !== 'none' ? money(taxBase(issConfig) * issConfig.rate / 100 * a.issFactor) : 0;
+    const legacyExclusion = a.legacy ? money(base * c.excludedLegacy / 100) : 0;
+    // LC 214, art. 12, §2º: ISS e tributos legados incidentes, não retenções de renda.
+    const rtcBase = money(Math.max(0, base - iss - legacyExclusion));
+    let inss = 0;
+    for (const [id, t] of Object.entries(c.taxes)) {
+      if (t.mode === 'none') continue;
+      let b = t.base === 'rtc' ? money(rtcBase * t.basePercent / 100) : taxBase(t);
+      if (t.mode === 'pf') b = Math.min(b, t.remainingCap);
+      const value = id === 'iss' ? iss : money(b * t.rate / 100);
+      if (id === 'inss') inss = value;
+      if (t.mode === 'own') own = money(own + value); else retained = money(retained + value);
+      rows.push({ id, base: b, rate: t.rate * (id === 'iss' ? a.issFactor : 1), value, treatment: t.mode });
+    }
+    let ir = 0;
+    if (c.ir.mode === 'flat') ir = money(Math.max(0, base * c.ir.basePercent / 100 * c.ir.rate / 100 - c.ir.deduction));
+    if (c.ir.mode === 'monthly') {
+      const income = money(base + c.ir.otherIncome);
+      const deductions = c.ir.deductionMode === 'simplified' ? 607.20 : money(inss + c.ir.otherDeductions);
+      ir = money(Math.max(0, monthlyIR(income, deductions) - c.ir.previousTax));
+    }
+    if (c.ir.mode !== 'none') {
+      retained = money(retained + ir);
+      rows.push({ id: 'ir', base, value: ir, treatment: 'retained', rate: base ? ir / base * 100 : 0 });
+    }
+    let ibs = 0, cbs = 0, ibsRate = 0, cbsRate = 0;
+    if (c.rtcEnabled) {
+      const factor = 1 - c.reduction / 100;
+      ibsRate = c.effectiveRates ? c.ibs : (a.ibs ?? c.ibs) * factor;
+      cbsRate = c.effectiveRates ? c.cbs : Math.max(0, (a.cbs ?? c.cbs) - a.cbsAdjustment) * factor;
+      ibs = money(rtcBase * ibsRate / 100);
+      cbs = money(rtcBase * cbsRate / 100);
+    }
+    const dispensed = c.year === 2026 && c.dispensed2026;
+    const rtc = dispensed ? 0 : money(ibs + cbs);
+    const separated = c.rtcCollection === 'separated' ? rtc : 0;
+    const rtcOwn = money(rtc - separated);
+    if (c.rtcEnabled) {
+      rows.push({ id: 'ibs', base: rtcBase, rate: ibsRate, value: ibs, treatment: dispensed ? 'informative' : c.rtcCollection });
+      rows.push({ id: 'cbs', base: rtcBase, rate: cbsRate, value: cbs, treatment: dispensed ? 'informative' : c.rtcCollection });
+    }
+    const total = money(base - conditional - other + rtc);
+    const payment = money(total - retained - separated);
+    const toReserve = money(own + rtcOwn);
+    const afterTax = money(payment - toReserve);
+    // O líquido no pagamento exclui o IBS/CBS a repassar: a reserva é explícita.
+    const paymentAvailable = money(payment - rtcOwn);
+    return { service, unconditional, conditional, other, base, rtcBase, iss, ibs, cbs, rtc,
+      retained, own, separated, rtcOwn, total, payment, paymentAvailable, toReserve, afterTax, rows,
+      net: c.goal === 'after-tax' ? afterTax : paymentAvailable };
+  }
+  function solve(c) {
+    validate(c);
+    const maximum = 1e9;
+    let low = 0, high = Math.max(100, c.target * 2);
+    while (high < maximum && forward(high, c, false).net < c.target) high = Math.min(maximum, high * 2);
+    if (forward(high, c, false).net < c.target) throw new Error('O líquido exige um preço acima do limite de R$ 1 bilhão. Confira os parâmetros.');
+    for (let i = 0; i < 80; i++) {
+      const mid = (low + high) / 2;
+      if (forward(mid, c, false).net < c.target) low = mid; else high = mid;
+    }
+    const center = Math.round(high * 100);
+    // Várias rubricas arredondadas criam degraus de centavos. Busca local evita
+    // supor monotonicidade estrita e prioriza um preço com líquido exato.
+    let best = null;
+    for (let cents = Math.max(0, center - 500); cents <= Math.min(maximum * 100, center + 500); cents++) {
+      const r = forward(cents / 100, c);
+      if (r.base < r.conditional + r.other || r.net < c.target || r.payment < 0) continue;
+      const delta = Math.round((r.net - c.target) * 100);
+      if (!best || delta < best.delta) best = { ...r, delta };
+      if (delta === 0) break;
+    }
+    if (!best) throw new Error('Não foi possível fechar o líquido em centavos. Revise a margem e os descontos.');
+    return best;
+  }
+  const api = { calendar, validate, round, monthlyIR, forward, solve };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.Calc = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script><script>'use strict';
+const $ = id => document.getElementById(id);
+const money = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
+const percent = v => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 4 }).format(v) + '%';
+const n = id => { const value = $(id).value.trim(); return value === '' ? null : Number(value); };
+const TAXES = [
+  ['iss', 'ISSQN', 5], ['pis', 'PIS', .65], ['cofins', 'COFINS', 3],
+  ['csll', 'CSLL', 1], ['inss', 'INSS', 11], ['custom', 'DAS / outra carga', 0]
+];
+const NAMES = Object.fromEntries([...TAXES.map(t => [t[0], t[1]]), ['ir', 'IR'], ['ibs', 'IBS'], ['cbs', 'CBS']]);
+const TREATMENTS = { retained: 'Retido pelo tomador', pf: 'Retido — pessoa física', own: 'Prestador recolhe', supplier: 'Receber e reservar', separated: 'Segregado / tomador', informative: 'Informativo — dispensado' };
+let lastResult = null;
+
+function mount() {
+  $('year').innerHTML = Array.from({ length: 9 }, (_, i) => `<option value="${2025 + i}" ${i === 2 ? 'selected' : ''}>${2025 + i}</option>`).join('');
+  $('taxes').innerHTML = TAXES.map(([id, name, rate]) => `<div class="tax-row" id="row_${id}">
+    <div class="tax-top"><span class="tax-name">${name}</span><label>Alíquota (%)<input id="rate_${id}" type="number" value="${rate}" min="0" max="99.99" step="0.0001"></label>
+    <label>Tratamento<select id="mode_${id}"><option value="none">Não incluir</option><option value="retained" ${id === 'iss' ? 'selected' : ''}>Retido pelo tomador</option><option value="own">Prestador recolhe</option>${id === 'inss' ? '<option value="pf">Retido — pessoa física com teto</option>' : ''}</select></label></div>
+    <div class="tax-extra" id="extra_${id}"><label>Percentual do serviço na base (%)<input id="base_${id}" type="number" value="100" min="0" max="100" step="0.0001"></label>
+    ${id === 'custom' ? '<label>Base da outra carga<select id="basis_custom"><option value="service">Serviço após desc. incondicional</option><option value="rtc">Base IBS/CBS (sem ISS)</option></select></label>' : `<p class="help" id="note_${id}"></p>`}</div>
+    ${id === 'inss' ? '<label id="capLabel" hidden>Base mensal ainda disponível para INSS (R$)<input id="remainingCap" type="number" min="0" step="0.01" placeholder="Teto do ano menos bases já utilizadas"><span class="help">Pessoa física: informe o teto vigente menos a base já usada no mês, inclusive em outras fontes. Em 2026 o teto é R$ 8.475,55. Para 2027, confirme o novo teto; não aplicamos o de 2026 automaticamente. Cessão de mão de obra/empreitada PJ não tem esse teto.</span></label>' : ''}</div>`).join('');
+  $('discounts').innerHTML = [['unconditional', 'Desconto incondicional'], ['conditional', 'Desconto condicional'], ['other', 'Outro desconto']].map(([id, name]) => `<div class="discount-row"><span>${name}</span><label>Tipo<select id="type_${id}"><option value="fixed">Valor (R$)</option><option value="percent">Percentual (%)</option></select></label><label>Quantia<input id="value_${id}" type="number" value="0" min="0" step="0.01"></label></div>`).join('');
+  $('calendarRows').innerHTML = Array.from({ length: 9 }, (_, i) => {
+    const a = Calc.calendar(2025 + i);
+    return `<tr><td>${a.year}</td><td>${a.legacy ? 'Vigentes' : 'Extintos'}</td><td>${a.issFactor ? percent(a.issFactor * 100) + ' da alíquota' : 'Extinto'}</td><td>${a.ibs === null ? 'Informar alíquota do ano' : percent(a.ibs)}</td><td>${a.cbs === null ? 'Informar' + (a.cbsAdjustment ? ' − 0,1 p.p.' : '') : percent(a.cbs)}</td></tr>`;
+  }).join('');
+  syncYear(true);
+  sync();
+}
+function invalidate() {
+  lastResult = null;
+  $('result').hidden = true;
+  $('emptyResult').hidden = false;
+  $('resultSubtitle').textContent = 'Calcule novamente após alterar os parâmetros.';
+  $('copyStatus').textContent = '';
+  $('error').hidden = true;
+}
+function syncYear(initial = false) {
+  const a = Calc.calendar(n('year'));
+  // Não carrega alíquotas fixas ou estimadas de uma competência para outra.
+  $('ibs').value = a.ibs ?? '';
+  $('cbs').value = a.cbs ?? '';
+  $('effectiveRates').checked = false;
+  $('publicConfirmed').checked = false;
+  $('irConfirmed').checked = false;
+  $('remainingCap').value = a.year === 2026 ? '8475.55' : '';
+  $('excludedLegacy').value = '0';
+  for (const id of ['pis', 'cofins', 'iss']) {
+    const extinct = id === 'iss' ? !a.issFactor : !a.legacy;
+    if (extinct) $(`mode_${id}`).value = 'none';
+    $(`mode_${id}`).disabled = extinct;
+  }
+  if (a.year === 2025) $('rtcEnabled').checked = false;
+  else if (!initial && $('regime').value === 'regular') $('rtcEnabled').checked = true;
+  $('yearNotice').textContent = a.year === 2025 ? '2025: regime anterior ao IBS/CBS.' : a.year === 2026 ? '2026: ano de teste. CBS 0,9% e IBS 0,1%; dispensa de recolhimento depende das obrigações acessórias. O destaque informativo não é adicionado ao pagamento quando dispensado.' : a.year <= 2028 ? `${a.year}: PIS/COFINS extintos; ISS integral; IBS total 0,1% (0,05% estadual + 0,05% municipal). CBS informada antes do ajuste sofre redução de 0,1 ponto percentual.` : `${a.year}: ${a.issFactor ? 'ISS a ' + percent(a.issFactor * 100) + ' da alíquota municipal.' : 'ISS extinto.'} Informe as alíquotas IBS/CBS da competência; não usamos a alíquota final de 2033 como se fosse a dos anos anteriores.`;
+  $('note_iss').textContent = a.issFactor ? `Aplicamos ${percent(a.issFactor * 100)} da alíquota municipal informada.` : 'Extinto nesta competência.';
+  $('note_pis').textContent = $('note_cofins').textContent = 'Retenção e incidência na apuração podem ter alíquotas diferentes.';
+  $('note_csll').textContent = 'A reforma não extingue esta retenção. Confirme sua aplicação.';
+  $('note_inss').textContent = 'PJ: retenção configurável sem teto. PF: escolha o modo com teto mensal disponível.';
+}
+function sync() {
+  const a = Calc.calendar(n('year'));
+  const manual = $('regime').value === 'manual';
+  $('manualNotice').hidden = !manual;
+  $('rtcEnabled').disabled = manual || a.year === 2025;
+  if (manual || a.year === 2025) $('rtcEnabled').checked = false;
+  $('rtcFields').hidden = !$('rtcEnabled').checked;
+  $('dispensedLabel').hidden = a.year !== 2026;
+  $('legacyLabel').hidden = a.year !== 2026;
+  const publicBuyer = $('buyer').value === 'public';
+  $('publicLabel').hidden = $('publicHelp').hidden = !publicBuyer;
+  const effective = $('effectiveRates').checked;
+  $('ibs').disabled = !effective && a.ibs !== null;
+  $('cbs').disabled = !effective && a.cbs !== null;
+  $('reduction').disabled = effective;
+  if (effective) $('reduction').value = '0';
+  $('cbs').closest('label').firstChild.textContent = effective ? 'CBS final aplicável (%)' : 'CBS antes do ajuste transitório (%)';
+  $('rateHelp').textContent = effective ? 'Usaremos exatamente as alíquotas finais informadas, sem descontar novamente 0,1 ponto percentual ou aplicar redução adicional.' : a.cbsAdjustment ? 'CBS efetiva = (alíquota informada − 0,1 ponto percentual) × (1 − redução). IBS efetivo = 0,1% × (1 − redução). Não há CBS estimada preenchida.' : 'Alíquotas fixas de teste vêm da lei; as demais devem ser informadas para o ano escolhido. Redução é aplicada proporcionalmente.';
+  $('goalHelp').textContent = $('goal').value === 'after-tax' ? 'O alvo é o saldo após as retenções e todos os recolhimentos selecionados, incluindo a reserva de IBS/CBS.' : 'O alvo é o pagamento após retenções, sempre descontando a reserva de IBS/CBS. Outros tributos que o prestador recolherá depois ficam fora deste objetivo e são mostrados separadamente.';
+  for (const [id] of TAXES) {
+    const inactive = $(`mode_${id}`).value === 'none' || $(`mode_${id}`).disabled;
+    $(`rate_${id}`).disabled = $(`base_${id}`).disabled = inactive;
+    $(`extra_${id}`).hidden = inactive;
+    $(`row_${id}`).classList.toggle('off', inactive);
+  }
+  $('capLabel').hidden = $('mode_inss').value !== 'pf';
+  $('irFlat').hidden = $('irMode').value !== 'flat';
+  $('irMonthly').hidden = $('irMode').value !== 'monthly';
+  $('otherDeductions').disabled = $('deductionMode').value === 'simplified';
+  for (const id of ['unconditional', 'conditional', 'other']) $(`value_${id}`).max = $(`type_${id}`).value === 'percent' ? '99.99' : '100000000';
+}
+function config() {
+  const a = Calc.calendar(n('year'));
+  const discount = id => ({ type: $(`type_${id}`).value, value: n(`value_${id}`) });
+  return { year: a.year, target: n('target'), goal: $('goal').value, regime: $('regime').value, buyer: $('buyer').value,
+    taxes: Object.fromEntries(TAXES.map(([id]) => [id, { mode: $(`mode_${id}`).value,
+      rate: n(`rate_${id}`), base: id === 'custom' ? $('basis_custom').value : 'service',
+      basePercent: n(`base_${id}`), remainingCap: id === 'inss' ? n('remainingCap') : 0 }])),
+    unconditional: discount('unconditional'), conditional: discount('conditional'), other: discount('other'),
+    rtcEnabled: $('rtcEnabled').checked, ibs: n('ibs'), cbs: n('cbs'), reduction: n('reduction'),
+    effectiveRates: $('effectiveRates').checked, rtcCollection: $('rtcCollection').value,
+    dispensed2026: $('dispensed2026').checked, publicConfirmed: $('publicConfirmed').checked,
+    excludedLegacy: a.legacy ? n('excludedLegacy') : 0,
+    ir: { mode: $('irMode').value, rate: n('irRate'), deduction: n('irDeduction'), basePercent: n('irBasePercent'),
+      otherIncome: n('otherIncome'), previousTax: n('previousTax'), otherDeductions: n('otherDeductions'),
+      deductionMode: $('deductionMode').value, confirmed: $('irConfirmed').checked } };
+}
+function render(c, r) {
+  const card = (title, value, note, highlight = false) => `<div class="result-card ${highlight ? 'highlight' : ''}"><span>${title}</span><strong>${money(value)}</strong><p>${note}</p></div>`;
+  $('serviceResult').textContent = money(r.service);
+  $('resultSubtitle').textContent = `Competência ${c.year} · valores arredondados por rubrica`;
+  $('resultCards').innerHTML = card('Total cobrado do tomador', r.total, 'Após descontos, com IBS/CBS a recolher.') +
+    card('Depósito ao prestador', r.payment, 'Após retenções e segregação no pagamento.') +
+    card('Reserva para recolhimentos', r.toReserve, 'Tributos recebidos que o prestador ainda recolherá.') +
+    card('Saldo após tributos incluídos', r.afterTax, 'Depois de reservar os recolhimentos selecionados.', c.goal === 'after-tax') +
+    card('Líquido do objetivo escolhido', r.net, c.goal === 'payment' ? 'Após retenções e reserva de IBS/CBS.' : 'Após todos os tributos considerados.', true) +
+    card('IBS/CBS acrescidos ao preço', r.rtc, c.year === 2026 && c.dispensed2026 ? 'Destaques informativos não foram cobrados.' : 'O tributo por fora não é renda do prestador.');
+  $('resultRows').innerHTML = r.rows.map(row => `<tr><td>${NAMES[row.id]}<br><span class="help">${percent(row.rate)}</span></td><td>${money(row.base)}</td><td>${money(row.value)}</td><td>${TREATMENTS[row.treatment]}</td></tr>`).join('') || '<tr><td colspan="4">Nenhum tributo incluído.</td></tr>';
+  const exact = r.delta === 0 ? 'O líquido do objetivo confere em centavos.' : `O líquido ficou ${money(r.delta / 100)} acima do alvo devido ao arredondamento das rubricas.`;
+  $('reconciliation').textContent = `Serviço ${money(r.service)} − desconto incondicional ${money(r.unconditional)} − desconto condicional ${money(r.conditional)} − outro desconto ${money(r.other)} + IBS/CBS ${money(r.rtc)} = total ${money(r.total)}. Total − retenções ${money(r.retained)} − segregação ${money(r.separated)} = depósito ${money(r.payment)}. Depósito − reserva ${money(r.toReserve)} = saldo ${money(r.afterTax)}. Base IBS/CBS: ${money(r.rtcBase)}. ${exact}`;
+  $('result').hidden = false;
+  $('emptyResult').hidden = true;
+  lastResult = { c, r };
+}
+function calculate(event) {
+  event.preventDefault();
+  invalidate();
+  try { const c = config(); render(c, Calc.solve(c)); }
+  catch (error) { $('error').textContent = error.message; $('error').hidden = false; $('error').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+}
+function memoryText() {
+  const { c, r } = lastResult;
+  return [`Calculadora Reversa NFS-e — competência ${c.year}`, `Objetivo: ${$('goal').selectedOptions[0].textContent}`, `Regime: ${$('regime').selectedOptions[0].textContent}; tomador: ${$('buyer').selectedOptions[0].textContent}`, `Líquido desejado: ${money(c.target)}`, `Valor do serviço: ${money(r.service)}`, `Total cobrado: ${money(r.total)}`, `Depósito: ${money(r.payment)}`, `Reserva: ${money(r.toReserve)}`, `Saldo após tributos: ${money(r.afterTax)}`, ...r.rows.map(row => `${NAMES[row.id]}: base ${money(row.base)}, alíquota ${percent(row.rate)}, valor ${money(row.value)} (${TREATMENTS[row.treatment]})`), $('reconciliation').textContent, 'Regras revisadas em 05/10/2026. Confirme enquadramento e alíquotas antes de emitir a NFS-e.'].join('\n');
+}
+mount();
+$('calculator').addEventListener('submit', calculate);
+$('calculator').addEventListener('input', invalidate);
+$('calculator').addEventListener('change', event => {
+  if (event.target.id === 'year') syncYear();
+  if (event.target.id === 'regime' && $('regime').value === 'manual') {
+    for (const id of ['iss', 'pis', 'cofins', 'csll']) $(`mode_${id}`).value = 'none';
+    $('mode_custom').value = 'own';
+    $('rate_custom').value = '';
+  }
+  sync(); invalidate();
+});
+$('printResult').addEventListener('click', () => window.print());
+$('copyResult').addEventListener('click', async () => {
+  if (!lastResult) return;
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(memoryText());
+    else {
+      const area = document.createElement('textarea'); area.value = memoryText(); document.body.append(area); area.select();
+      const ok = document.execCommand('copy'); area.remove(); if (!ok) throw new Error('Clipboard unavailable');
+    }
+    $('copyStatus').textContent = 'Memória copiada.';
+  } catch { $('copyStatus').textContent = 'A cópia foi bloqueada pelo navegador. Use Imprimir para salvar a memória em PDF.'; }
+});
+</script>
+</body></html>

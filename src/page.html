@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Descubra quanto cobrar pelo serviço para preservar o líquido desejado, considerando ISS, IBS, CBS, retenções e descontos.">
+<title>Calculadora Reversa · IBS e CBS 2027</title>
+<style>/* STYLES */</style>
+</head>
+<body>
+<header class="hero"><div class="wrap"><div class="eyebrow">CALCULADORA REVERSA NFS-e <span>EDIÇÃO 2027</span></div>
+<h1>Seu líquido é o ponto de partida.</h1><p>Descubra quanto cobrar pelo serviço e quanto o tomador deve pagar durante a transição para o IBS e a CBS.</p>
+<div class="hero-meta">2025 — 2033 <span>•</span> Funciona offline <span>•</span> Regras revisadas em 05/10/2026</div></div></header>
+<main class="wrap layout">
+<form id="calculator" novalidate>
+<section class="panel"><div class="section-heading"><span class="step">01</span><div><h2>Defina o valor que quer preservar</h2><p>Escolha a competência e o objetivo da simulação.</p></div></div>
+<div class="grid"><label class="wide">Líquido desejado (R$)<input id="target" class="money-input" type="number" min="0.01" max="100000000" step="0.01" value="1200" required inputmode="decimal"></label>
+<label>Ano da competência<select id="year"></select></label>
+<label>Objetivo do líquido<select id="goal"><option value="after-tax">Após todos os tributos incluídos</option><option value="payment">Após retenções e reserva de IBS/CBS</option></select></label>
+<label>Regime de cálculo<select id="regime"><option value="regular">Tributos discriminados / IBS-CBS regular</option><option value="manual">Simples, MEI ou composição manual</option></select></label>
+<label>Tomador<select id="buyer"><option value="private">Pessoa ou empresa privada</option><option value="public">Administração pública</option></select></label></div>
+<div class="notice" id="yearNotice"></div>
+<p class="help" id="goalHelp"></p>
+<div class="notice warning" id="manualNotice" hidden>Informe a carga efetiva aplicável em “DAS / outra carga”. Evite contar novamente tributos já incluídos no DAS. Se IBS/CBS forem recolhidos fora do Simples, use o regime regular e informe os demais tributos separadamente. Este modo não calcula anexos, fator R ou receita acumulada.</div>
+</section>
+<section class="panel"><div class="section-heading"><span class="step">02</span><div><h2>Tributos e retenções</h2><p>Selecione somente o que se aplica ao prestador e à operação.</p></div></div>
+<div class="tax-list" id="taxes"></div>
+<p class="help">“Prestador recolhe” entra no líquido após tributos. “Retido” reduz o pagamento. Percentuais iniciais de ISS e retenções são campos de trabalho editáveis, não enquadramento automático. Não são calculados limites de dispensa, créditos, lucro, IRPJ ou apuração mensal de CSLL.</p>
+<label class="check"><input id="rtcEnabled" type="checkbox" checked> Incluir IBS e CBS no regime regular</label>
+<div id="rtcFields" class="inset">
+<div class="grid"><label>IBS total (%)<input id="ibs" type="number" min="0" max="99.99" step="0.0001" value="0.1"></label>
+<label>CBS antes do ajuste transitório (%)<input id="cbs" type="number" min="0" max="99.99" step="0.0001" placeholder="Informe a alíquota aplicável"></label>
+<label>Redução de alíquota IBS/CBS<select id="reduction"><option value="0">Sem redução</option><option value="30">30% — sujeito ao art. 127</option><option value="60">60% — sujeito aos arts. 128 a 130</option><option value="100">100% — confirme a hipótese legal</option></select></label>
+<label>Forma de recolhimento<select id="rtcCollection"><option value="supplier">Prestador recebe e depois recolhe</option><option value="separated">Segregado no pagamento / tomador recolhe</option></select></label></div>
+<label class="check"><input id="effectiveRates" type="checkbox"> Informar alíquotas finais, já com ajustes e reduções</label>
+<p class="help" id="rateHelp"></p>
+<label class="check" id="dispensedLabel" hidden><input id="dispensed2026" type="checkbox" checked> 2026: recolhimento dispensado por cumprimento das obrigações acessórias</label>
+<label class="check" id="publicLabel" hidden><input id="publicConfirmed" type="checkbox"> Confirmei as alíquotas finais para esta compra pública, incluindo o redutor e as regras de destinação.</label>
+<p class="help" id="publicHelp" hidden>Compras públicas têm regras próprias. O aplicativo não presume que o tomador recolhe nem aplica automaticamente os arts. 472–473 da LC 214. Informe as alíquotas finais da operação, após conferir também as exceções e a transição no regulamento.</p>
+<label id="legacyLabel" hidden>PIS/COFINS incidentes a excluir da base IBS/CBS (%)<input id="excludedLegacy" type="number" value="0" min="0" max="100" step="0.0001"><span class="help">Informe a incidência da operação, se houver. Retenção na fonte não é a alíquota da apuração. A exclusão não gera um segundo desconto do líquido.</span></label>
+<p class="help">IBS/CBS são somados por fora sobre sua própria base. Até 2032, excluímos o ISS incidente e, em 2026, o PIS/COFINS informado acima. CSLL, INSS e IR retidos não são excluídos automaticamente dessa base. Reduções exigem enquadramento legal: profissão, atividade e NBS, conforme o caso.</p>
+</div>
+<details><summary>Imposto de Renda</summary><div class="inset">
+<label>Como calcular o IR<select id="irMode"><option value="none">Não incluir</option><option value="flat">Retenção configurável por alíquota</option><option value="monthly">IRPF mensal — parâmetros de 2026</option></select></label>
+<div id="irFlat" class="grid" hidden><label>IR (%)<input id="irRate" type="number" value="1.5" min="0" max="99.99" step="0.0001"></label><label>Parcela a deduzir (R$)<input id="irDeduction" type="number" value="0" min="0" step="0.01"></label><label>Percentual do serviço na base (%)<input id="irBasePercent" type="number" value="100" min="0" max="100" step="0.0001"></label><p class="help">Configure a retenção aplicável ao serviço e ao tomador. Para retenções de órgãos públicos, consulte o Anexo I da IN RFB 1.234/2012 e suas alterações; 1,5% não é uma regra universal.</p></div>
+<div id="irMonthly" hidden><div class="grid"><label>Outros rendimentos do mês da mesma fonte (R$)<input id="otherIncome" type="number" value="0" min="0" step="0.01"></label><label>IR já retido pela fonte no mês (R$)<input id="previousTax" type="number" value="0" min="0" step="0.01"></label><label>Dedução mensal<select id="deductionMode"><option value="legal">INSS desta operação + outras deduções legais</option><option value="simplified">Desconto simplificado de R$ 607,20</option></select></label><label>Outras deduções legais do mês (R$)<input id="otherDeductions" type="number" value="0" min="0" step="0.01"></label></div>
+<label class="check"><input id="irConfirmed" type="checkbox"> Confirmei que os parâmetros de IRPF de 2026 se aplicam a esta competência.</label>
+<p class="help">Tabela progressiva com parcela a deduzir e redução mensal da Lei 15.270/2025: até R$ 5 mil e entre R$ 5 mil e R$ 7.350. Usa os rendimentos mensais para a redução e a base após deduções para a tabela. Não calcula ajuste anual ou outras fontes pagadoras. A confirmação é necessária também em 2027; parâmetros futuros não são presumidos.</p></div></div></details>
+</section>
+<section class="panel"><div class="section-heading"><span class="step">03</span><div><h2>Descontos e ajustes</h2><p>Preencha apenas os descontos que constam da operação.</p></div></div>
+<div id="discounts"></div><p class="help">O desconto incondicional reduz o serviço e a base IBS/CBS. O condicional e o outro desconto reduzem o pagamento, sem reduzir automaticamente as bases. Para uma base diferente de retenção, ajuste o percentual no tributo.</p>
+<div id="error" class="notice error" role="alert" hidden></div>
+<button class="primary" type="submit">Calcular quanto cobrar <span aria-hidden="true">→</span></button>
+</section>
+</form>
+<aside><section class="panel result-panel" aria-live="polite" aria-atomic="true"><div class="section-heading"><span class="step">=</span><div><h2>Seu cálculo, explicado</h2><p id="resultSubtitle">Os valores aparecem após o cálculo.</p></div></div>
+<div id="emptyResult" class="empty"><div class="empty-symbol" aria-hidden="true">R$</div><h3>Comece pelo seu líquido</h3><p>Informe os tributos da operação para obter o valor do serviço, o total cobrado e a reserva para recolhimento.</p></div>
+<div id="result" hidden><div class="featured"><span>VALOR DO SERVIÇO ANTES DOS DESCONTOS</span><strong id="serviceResult"></strong><p>Preço do serviço, com ISS quando incidente, antes de somar IBS/CBS.</p></div>
+<div class="result-grid" id="resultCards"></div>
+<h3 class="small-title">Memória de cálculo</h3><div class="table-scroll"><table><caption class="sr-only">Tributos, bases e destinação</caption><thead><tr><th>Tributo</th><th>Base</th><th>Valor</th><th>Destino</th></tr></thead><tbody id="resultRows"></tbody></table></div>
+<div id="reconciliation" class="notice"></div><div class="actions"><button type="button" id="copyResult">Copiar memória</button><button type="button" id="printResult">Imprimir</button></div><p id="copyStatus" class="help" role="status"></p></div>
+</section></aside>
+<section class="panel sources"><h2>Transição e fontes oficiais</h2><p>As datas vêm da EC 132/2023 e da LC 214/2025, com alterações da LC 227/2026. A revisão não identificou uma alíquota numérica de referência CBS 2027 confirmada para preencher automaticamente.</p>
+<div class="table-scroll"><table><caption class="sr-only">Calendário da transição de 2025 a 2033</caption><thead><tr><th>Ano</th><th>PIS/COFINS</th><th>ISS municipal</th><th>IBS</th><th>CBS</th></tr></thead><tbody id="calendarRows"></tbody></table></div>
+<ul class="source-links"><li><a href="https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp214compilado.htm" target="_blank" rel="noopener noreferrer">LC 214/2025 compilada</a> — art. 12 (bases), arts. 127–130 (reduções), arts. 343–349 (transição), arts. 472–473 (compras públicas).</li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc132.htm" target="_blank" rel="noopener noreferrer">EC 132/2023</a> — ADCT, arts. 125–129 (calendário do ISS e dos novos tributos).</li>
+<li><a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026" target="_blank" rel="noopener noreferrer">Receita Federal: IRPF 2026</a> — tabela progressiva e redução mensal.</li>
+<li><a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer">INSS: tabela e teto 2026</a> — R$ 8.475,55; o teto de 2027 deve ser informado após confirmação.</li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/2003/l10.666.htm" target="_blank" rel="noopener noreferrer">Lei 10.666/2003, art. 4º</a> e <a href="https://www.planalto.gov.br/ccivil_03/leis/l8212cons.htm" target="_blank" rel="noopener noreferrer">Lei 8.212/1991, art. 31</a> — regimes distintos de contribuição e retenção previdenciária.</li></ul>
+<p class="help">A calculadora forma preço para os tributos e descontos selecionados. Ela não apura lucro, créditos IBS/CBS, obrigações acessórias, anexos do Simples ou enquadramento fiscal. A segregação no pagamento é um cenário de caixa, cuja aplicação depende das regras da operação. Confirme os parâmetros antes de emitir a NFS-e.</p></section>
+</main><footer class="wrap">Calculadora Reversa · v2.0 <span>Sem envio de dados. Sem dependências externas.</span></footer>
+<script>/* ENGINE */</script><script>/* APP */</script>
+</body></html>
