@@ -28,6 +28,6 @@ Inclui as correções da versão 2.0.0: separação entre preço, total cobrado,
 - Compilação e lint de release aprovados, sem erros de lint.
 - Integridade ZIP, assinatura, pacote, versão e HTML incorporado conferidos.
 
-Não houve teste em celular físico, envio por aplicativo de compartilhamento ou gravação final de um PDF pelo seletor do sistema. O teste de impressão confirma a abertura da interface nativa. O aplicativo não substitui enquadramento ou apuração fiscal completa.
+A suíte de 8 testes passou em uma execução; repetições apresentaram travamentos intermitentes do emulador, documentados no relatório de validação. Não houve teste em celular físico, envio por aplicativo de compartilhamento ou gravação final de um PDF pelo seletor do sistema. O teste de impressão confirma a abertura da interface nativa. O aplicativo não substitui enquadramento ou apuração fiscal completa.
 
 Detalhes em `docs/ANDROID.md`, `docs/VALIDACAO-ANDROID.md` e `docs/REGRAS-2027.md`.
