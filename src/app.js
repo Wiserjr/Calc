@@ -10,6 +10,30 @@ const TAXES = [
 const NAMES = Object.fromEntries([...TAXES.map(t => [t[0], t[1]]), ['ir', 'IR'], ['ibs', 'IBS'], ['cbs', 'CBS']]);
 const TREATMENTS = { retained: 'Retido pelo tomador', pf: 'Retido — pessoa física', own: 'Prestador recolhe', supplier: 'Receber e reservar', separated: 'Segregado / tomador', informative: 'Informativo — dispensado' };
 let lastResult = null;
+const nativeBridge = window.CalcAndroid;
+const nativePending = new Map();
+let nativeSequence = 0;
+if (nativeBridge && typeof nativeBridge.postMessage === 'function') {
+  nativeBridge.onmessage = event => {
+    try {
+      const reply = JSON.parse(event.data);
+      const pending = nativePending.get(reply.id);
+      if (!pending) return;
+      nativePending.delete(reply.id);
+      clearTimeout(pending.timeout);
+      if (reply.ok) pending.resolve(); else pending.reject(new Error(reply.error || 'Não foi possível concluir a ação.'));
+    } catch { /* Uma resposta inválida não altera o cálculo. */ }
+  };
+}
+function nativeRequest(action, text = '') {
+  return new Promise((resolve, reject) => {
+    const id = String(++nativeSequence);
+    const timeout = setTimeout(() => { nativePending.delete(id); reject(new Error('O Android não respondeu. Tente novamente.')); }, 15000);
+    nativePending.set(id, { resolve, reject, timeout });
+    try { nativeBridge.postMessage(JSON.stringify({ id, action, text })); }
+    catch (error) { clearTimeout(timeout); nativePending.delete(id); reject(error); }
+  });
+}
 
 function mount() {
   $('year').innerHTML = Array.from({ length: 9 }, (_, i) => `<option value="${2025 + i}" ${i === 2 ? 'selected' : ''}>${2025 + i}</option>`).join('');
@@ -133,6 +157,7 @@ function memoryText() {
   return [`Calculadora Reversa NFS-e — competência ${c.year}`, `Objetivo: ${$('goal').selectedOptions[0].textContent}`, `Regime: ${$('regime').selectedOptions[0].textContent}; tomador: ${$('buyer').selectedOptions[0].textContent}`, `Líquido desejado: ${money(c.target)}`, `Valor do serviço: ${money(r.service)}`, `Total cobrado: ${money(r.total)}`, `Depósito: ${money(r.payment)}`, `Reserva: ${money(r.toReserve)}`, `Saldo após tributos: ${money(r.afterTax)}`, ...r.rows.map(row => `${NAMES[row.id]}: base ${money(row.base)}, alíquota ${percent(row.rate)}, valor ${money(row.value)} (${TREATMENTS[row.treatment]})`), $('reconciliation').textContent, 'Regras revisadas em 05/10/2026. Confirme enquadramento e alíquotas antes de emitir a NFS-e.'].join('\n');
 }
 mount();
+$('shareResult').hidden = !nativeBridge;
 $('calculator').addEventListener('submit', calculate);
 $('calculator').addEventListener('input', invalidate);
 $('calculator').addEventListener('change', event => {
@@ -144,11 +169,26 @@ $('calculator').addEventListener('change', event => {
   }
   sync(); invalidate();
 });
-$('printResult').addEventListener('click', () => window.print());
+$('printResult').addEventListener('click', async () => {
+  if (!lastResult) return;
+  if (!nativeBridge) {
+    if (navigator.userAgent.includes('CalcAndroid/')) $('copyStatus').textContent = 'Atualize o Android System WebView para usar impressão/PDF.';
+    else window.print();
+    return;
+  }
+  try { await nativeRequest('print'); $('copyStatus').textContent = 'Selecione uma impressora ou Salvar como PDF no Android.'; }
+  catch (error) { $('copyStatus').textContent = error.message; }
+});
+$('shareResult').addEventListener('click', async () => {
+  if (!lastResult || !nativeBridge) return;
+  try { await nativeRequest('share', memoryText()); $('copyStatus').textContent = 'Escolha o aplicativo de destino para compartilhar a memória.'; }
+  catch (error) { $('copyStatus').textContent = error.message; }
+});
 $('copyResult').addEventListener('click', async () => {
   if (!lastResult) return;
   try {
-    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(memoryText());
+    if (nativeBridge) await nativeRequest('copy', memoryText());
+    else if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(memoryText());
     else {
       const area = document.createElement('textarea'); area.value = memoryText(); document.body.append(area); area.select();
       const ok = document.execCommand('copy'); area.remove(); if (!ok) throw new Error('Clipboard unavailable');

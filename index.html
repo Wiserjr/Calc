@@ -59,7 +59,7 @@
 <div id="result" hidden><div class="featured"><span>VALOR DO SERVIÇO ANTES DOS DESCONTOS</span><strong id="serviceResult"></strong><p>Preço do serviço, com ISS quando incidente, antes de somar IBS/CBS.</p></div>
 <div class="result-grid" id="resultCards"></div>
 <h3 class="small-title">Memória de cálculo</h3><div class="table-scroll"><table><caption class="sr-only">Tributos, bases e destinação</caption><thead><tr><th>Tributo</th><th>Base</th><th>Valor</th><th>Destino</th></tr></thead><tbody id="resultRows"></tbody></table></div>
-<div id="reconciliation" class="notice"></div><div class="actions"><button type="button" id="copyResult">Copiar memória</button><button type="button" id="printResult">Imprimir</button></div><p id="copyStatus" class="help" role="status"></p></div>
+<div id="reconciliation" class="notice"></div><div class="actions"><button type="button" id="copyResult">Copiar memória</button><button type="button" id="printResult">Imprimir / PDF</button><button type="button" id="shareResult" hidden>Compartilhar</button></div><p id="copyStatus" class="help" role="status"></p></div>
 </section></aside>
 <section class="panel sources"><h2>Transição e fontes oficiais</h2><p>As datas vêm da EC 132/2023 e da LC 214/2025, com alterações da LC 227/2026. A revisão não identificou uma alíquota numérica de referência CBS 2027 confirmada para preencher automaticamente.</p>
 <div class="table-scroll"><table><caption class="sr-only">Calendário da transição de 2025 a 2033</caption><thead><tr><th>Ano</th><th>PIS/COFINS</th><th>ISS municipal</th><th>IBS</th><th>CBS</th></tr></thead><tbody id="calendarRows"></tbody></table></div>
@@ -69,7 +69,7 @@
 <li><a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer">INSS: tabela e teto 2026</a> — R$ 8.475,55; o teto de 2027 deve ser informado após confirmação.</li>
 <li><a href="https://www.planalto.gov.br/ccivil_03/leis/2003/l10.666.htm" target="_blank" rel="noopener noreferrer">Lei 10.666/2003, art. 4º</a> e <a href="https://www.planalto.gov.br/ccivil_03/leis/l8212cons.htm" target="_blank" rel="noopener noreferrer">Lei 8.212/1991, art. 31</a> — regimes distintos de contribuição e retenção previdenciária.</li></ul>
 <p class="help">A calculadora forma preço para os tributos e descontos selecionados. Ela não apura lucro, créditos IBS/CBS, obrigações acessórias, anexos do Simples ou enquadramento fiscal. A segregação no pagamento é um cenário de caixa, cuja aplicação depende das regras da operação. Confirme os parâmetros antes de emitir a NFS-e.</p></section>
-</main><footer class="wrap">Calculadora Reversa · v2.0 <span>Sem envio de dados. Sem dependências externas.</span></footer>
+</main><footer class="wrap">Calculadora Reversa · v2.1.0 <span>Sem coleta de dados. Cálculo offline.</span></footer>
 <script>/* Motor sem DOM ou dependências. Valores em reais; arredondamento por rubrica. */
 (function (root) {
   'use strict';
@@ -261,6 +261,30 @@ const TAXES = [
 const NAMES = Object.fromEntries([...TAXES.map(t => [t[0], t[1]]), ['ir', 'IR'], ['ibs', 'IBS'], ['cbs', 'CBS']]);
 const TREATMENTS = { retained: 'Retido pelo tomador', pf: 'Retido — pessoa física', own: 'Prestador recolhe', supplier: 'Receber e reservar', separated: 'Segregado / tomador', informative: 'Informativo — dispensado' };
 let lastResult = null;
+const nativeBridge = window.CalcAndroid;
+const nativePending = new Map();
+let nativeSequence = 0;
+if (nativeBridge && typeof nativeBridge.postMessage === 'function') {
+  nativeBridge.onmessage = event => {
+    try {
+      const reply = JSON.parse(event.data);
+      const pending = nativePending.get(reply.id);
+      if (!pending) return;
+      nativePending.delete(reply.id);
+      clearTimeout(pending.timeout);
+      if (reply.ok) pending.resolve(); else pending.reject(new Error(reply.error || 'Não foi possível concluir a ação.'));
+    } catch { /* Uma resposta inválida não altera o cálculo. */ }
+  };
+}
+function nativeRequest(action, text = '') {
+  return new Promise((resolve, reject) => {
+    const id = String(++nativeSequence);
+    const timeout = setTimeout(() => { nativePending.delete(id); reject(new Error('O Android não respondeu. Tente novamente.')); }, 15000);
+    nativePending.set(id, { resolve, reject, timeout });
+    try { nativeBridge.postMessage(JSON.stringify({ id, action, text })); }
+    catch (error) { clearTimeout(timeout); nativePending.delete(id); reject(error); }
+  });
+}
 
 function mount() {
   $('year').innerHTML = Array.from({ length: 9 }, (_, i) => `<option value="${2025 + i}" ${i === 2 ? 'selected' : ''}>${2025 + i}</option>`).join('');
@@ -384,6 +408,7 @@ function memoryText() {
   return [`Calculadora Reversa NFS-e — competência ${c.year}`, `Objetivo: ${$('goal').selectedOptions[0].textContent}`, `Regime: ${$('regime').selectedOptions[0].textContent}; tomador: ${$('buyer').selectedOptions[0].textContent}`, `Líquido desejado: ${money(c.target)}`, `Valor do serviço: ${money(r.service)}`, `Total cobrado: ${money(r.total)}`, `Depósito: ${money(r.payment)}`, `Reserva: ${money(r.toReserve)}`, `Saldo após tributos: ${money(r.afterTax)}`, ...r.rows.map(row => `${NAMES[row.id]}: base ${money(row.base)}, alíquota ${percent(row.rate)}, valor ${money(row.value)} (${TREATMENTS[row.treatment]})`), $('reconciliation').textContent, 'Regras revisadas em 05/10/2026. Confirme enquadramento e alíquotas antes de emitir a NFS-e.'].join('\n');
 }
 mount();
+$('shareResult').hidden = !nativeBridge;
 $('calculator').addEventListener('submit', calculate);
 $('calculator').addEventListener('input', invalidate);
 $('calculator').addEventListener('change', event => {
@@ -395,11 +420,26 @@ $('calculator').addEventListener('change', event => {
   }
   sync(); invalidate();
 });
-$('printResult').addEventListener('click', () => window.print());
+$('printResult').addEventListener('click', async () => {
+  if (!lastResult) return;
+  if (!nativeBridge) {
+    if (navigator.userAgent.includes('CalcAndroid/')) $('copyStatus').textContent = 'Atualize o Android System WebView para usar impressão/PDF.';
+    else window.print();
+    return;
+  }
+  try { await nativeRequest('print'); $('copyStatus').textContent = 'Selecione uma impressora ou Salvar como PDF no Android.'; }
+  catch (error) { $('copyStatus').textContent = error.message; }
+});
+$('shareResult').addEventListener('click', async () => {
+  if (!lastResult || !nativeBridge) return;
+  try { await nativeRequest('share', memoryText()); $('copyStatus').textContent = 'Escolha o aplicativo de destino para compartilhar a memória.'; }
+  catch (error) { $('copyStatus').textContent = error.message; }
+});
 $('copyResult').addEventListener('click', async () => {
   if (!lastResult) return;
   try {
-    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(memoryText());
+    if (nativeBridge) await nativeRequest('copy', memoryText());
+    else if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(memoryText());
     else {
       const area = document.createElement('textarea'); area.value = memoryText(); document.body.append(area); area.select();
       const ok = document.execCommand('copy'); area.remove(); if (!ok) throw new Error('Clipboard unavailable');

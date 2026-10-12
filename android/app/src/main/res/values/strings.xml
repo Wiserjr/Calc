@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculadora IBS CBS</string>
+    <string name="copy_label">Memória de cálculo NFS-e</string>
+    <string name="share_title">Compartilhar memória</string>
+    <string name="print_name">Calculadora Reversa NFS-e</string>
+    <string name="external_unavailable">Nenhum navegador disponível para abrir esta fonte.</string>
+    <string name="load_error">Não foi possível abrir a calculadora. Feche e abra o aplicativo novamente.</string>
+    <string name="webview_required">Atualize o Android System WebView para usar todos os recursos.</string>
+</resources>

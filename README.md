@@ -2,6 +2,8 @@
 
 Informe o líquido que o prestador precisa preservar. A calculadora encontra o preço do serviço e separa o total cobrado, o depósito, as retenções e a reserva para recolhimentos. Aplicação estática em português, sem bibliotecas externas, coleta de dados ou necessidade de conexão.
 
+**Versão 2.1.0: também disponível como aplicativo Android offline.** [Baixar o APK assinado](https://github.com/Wiserjr/Calc/releases/download/v2.1.0/Calc-IBS-CBS-2.1.0-android.apk) ou consultar a [versão publicada](https://github.com/Wiserjr/Calc/releases/tag/v2.1.0).
+
 ![Calculadora em tela de computador](docs/images/calculadora-desktop.jpg)
 
 ## Usar
@@ -13,6 +15,10 @@ Baixe e abra **[calc.html](calc.html)** no navegador. O arquivo inclui todos os 
 3. Configure a incidência, a alíquota e o percentual da base de cada tributo. Os valores iniciais de ISS e retenções não determinam enquadramento.
 4. Para IBS/CBS regular, informe a CBS aplicável antes do ajuste da transição, ou marque **alíquotas finais** para fornecer valores já ajustados.
 5. Calcule. Confira a memória, copie ou imprima para PDF pelo navegador.
+
+No Android 8.0 ou superior, baixe o APK e abra-o para instalar. Se o sistema solicitar, permita a instalação por esse navegador ou gerenciador de arquivos. O aplicativo inclui a calculadora, não solicita permissão de internet e oferece cópia nativa, compartilhamento escolhido pelo usuário e impressão pelo Android/Salvar como PDF. As fontes oficiais abrem no navegador externo. É recomendado manter o Android System WebView atualizado.
+
+O APK é universal para celulares ARM/ARM64 e emuladores x86/x86_64; não usa bibliotecas específicas de CPU. O projeto e a assinatura estão descritos em [docs/ANDROID.md](docs/ANDROID.md).
 
 O resultado é invalidado sempre que um parâmetro muda. Não há armazenamento persistente de dados. As verificações realizadas e seus limites estão em [docs/VALIDACAO.md](docs/VALIDACAO.md).
 
@@ -53,6 +59,8 @@ npm run check
 - `scripts/build.cjs`: gera `calc.html` e `index.html` com tudo incorporado.
 - `tests/engine.test.cjs`: regressões de cálculo e reconciliação em centavos.
 - `.github/workflows/check.yml`: verificação automática em push e pull request.
+- `android/`: aplicativo Android com HTML gerado diretamente das mesmas fontes web.
+- `scripts/build-android.ps1`: compilação assinada e verificação de assinatura e conteúdo.
 
 Edite as fontes e execute o build; a verificação falha se os HTMLs não corresponderem às fontes. A versão anterior permanece recuperável pelo histórico Git.
 
