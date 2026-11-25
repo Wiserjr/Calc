@@ -22,6 +22,14 @@ test('2027 exclui ISS, aplica CBS menos 0,1 p.p. e soma os tributos por fora', (
   assert.equal(r.total, 1095); assert.equal(r.payment, 1045);
   assert.equal(r.toReserve, 95); assert.equal(r.afterTax, 950);
 });
+test('Caso de referência oficial (ALIQUOTA_REFERENCIA, calculadora-rtc-regime-regular): CBS 8,50%→8,40% e IBS 0,10% em 2027 e 2028', () => {
+  for (const year of [2027, 2028]) {
+    const r = forward(1000, fixture({ year, cbs: 8.5 }));
+    assert.equal(r.ibs, .95); assert.equal(r.cbs, 79.8);
+    assert.equal(r.rtc, 80.75); assert.equal(r.total, 1080.75);
+    assert.equal(r.payment, 1030.75); assert.equal(r.toReserve, 80.75); assert.equal(r.afterTax, 950);
+  }
+});
 test('Segregação altera caixa e reserva, mantendo o preço e saldo', () => {
   const supplier = solve(fixture()); const separated = solve(fixture({ rtcCollection: 'separated' }));
   assert.equal(supplier.service, separated.service); assert.equal(supplier.total, separated.total);

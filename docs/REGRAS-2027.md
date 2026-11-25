@@ -10,8 +10,9 @@ Data de revisão: **5 de outubro de 2026**. Ano solicitado: **2027**.
 4. [Receita Federal: tributação de 2026](https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026), tabela de incidência mensal, desconto simplificado e redução da Lei 15.270/2025.
 5. [INSS: tabela de contribuição mensal](https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal), teto de R$ 8.475,55 desde janeiro de 2026.
 6. [Decreto 12.955/2026 — regulamento da CBS, Senado](https://legis.senado.leg.br/norma/43106091/publicacao/43105497), localizado na pesquisa, especialmente arts. 439–443 e particularidades da transição de compras públicas. O app exige informação das alíquotas finais e não automatiza esse regime.
+7. [ReceitaFederal/calculadora-rtc-regime-regular, GitHub](https://github.com/ReceitaFederal/calculadora-rtc-regime-regular), commit `f1eebd7`, tabela `ALIQUOTA_REFERENCIA` da base `flyway/sql/criacao/B0001__sistema_tributario_completo.sql`. API oficial de cálculo da Receita Federal, licença MIT; usada apenas para conferir alíquotas de referência publicadas, sem acoplar o app a ela.
 
-Não foi confirmada nesta pesquisa uma resolução com alíquota numérica CBS de referência 2027 para incluir como padrão. Isso **não prova ausência de publicação**. A solução usa campo obrigatório, preenchido pelo operador conforme o ato aplicável. Não se inventa o teto INSS de 2027 nem se apresenta a tabela IRPF 2026 como uma nova tabela de 2027.
+A tabela `ALIQUOTA_REFERENCIA` dessa API confirma a alíquota padrão de CBS em 2027 e 2028 como **8,50% antes do ajuste de transição (8,40% líquido do ajuste de 0,1 p.p.)**, e o IBS total (estadual + municipal) em **0,10%** nesses dois anos — os mesmos números usados no caso de referência dos testes de regressão. Isso substitui a incerteza anterior sobre uma resolução com alíquota numérica CBS de referência 2027: a fonte 7 confirma o valor. A aplicação continua a exigir que o operador informe a CBS do ano manualmente; a confirmação apenas remove a incerteza sobre o número oficial, sem alterar o comportamento do app. Não se inventa o teto INSS de 2027 nem se apresenta a tabela IRPF 2026 como uma nova tabela de 2027.
 
 ## Alterações necessárias identificadas na versão anterior
 
@@ -71,4 +72,4 @@ No objetivo de pagamento, o motor ainda exclui IBS/CBS recebidos para repasse. I
 
 ## Verificação
 
-O conjunto de testes cobre o exemplo fornecido, base e ajuste 2027, reduções setoriais, dispensa de 2026, separação de caixa, ISS posterior, INSS PF/PJ, IRPF mensal, pagamentos anteriores, descontos, Simples manual, dados inválidos e 100 combinações de reconciliação em centavos. A interface é conferida no navegador e os arquivos entregues são gerados das mesmas fontes testadas.
+O conjunto de testes cobre o exemplo fornecido, base e ajuste 2027, reduções setoriais, dispensa de 2026, separação de caixa, ISS posterior, INSS PF/PJ, IRPF mensal, pagamentos anteriores, descontos, Simples manual, dados inválidos, 100 combinações de reconciliação em centavos e um caso de referência com as alíquotas oficiais da tabela `ALIQUOTA_REFERENCIA` (fonte 7): CBS 8,50%→8,40% e IBS 0,10% em 2027 e 2028. A interface é conferida no navegador e os arquivos entregues são gerados das mesmas fontes testadas.
